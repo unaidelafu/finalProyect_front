@@ -17,6 +17,7 @@ const NavigationContainer =  (props) =>{
 
     const handleSignOut = () =>{
         //Delete de session:
+        /*
         axios.delete("https://api.devcamp.space/logout",
         {withCredentials: true}).then(response => {
             if(response.status === 200){    //Success
@@ -27,7 +28,9 @@ const NavigationContainer =  (props) =>{
         })
         .catch(error =>{
             console.log("Error signin out", error)
-        });   
+        });   */
+        props.history.push("/auth");
+        props.handleSuccessfulLogout();
     };
     
 
@@ -39,35 +42,30 @@ const NavigationContainer =  (props) =>{
             {/*Al pulsar cada ruta, utiliza la class = active
             puede editarse y nombrar esa clase de activo: "unai-active"
             Interesante para cambiar los estilos del titulo.*/}
-            <div className="nav-link-wrapper">
-                <NavLink exact to ="/" activeClassName="nav-link-active">
-                    Home
-                </NavLink>
-            </div>
-            <div className="nav-link-wrapper">
-                <NavLink to ="/inventory" activeClassName="nav-link-active">
-                    Inventory
-                </NavLink>
-            </div>
-            <div className="nav-link-wrapper">
-                <NavLink to ="/customers" activeClassName="nav-link-active">
-                    Customers
-                </NavLink>
-            </div>
-            <div className="nav-link-wrapper">
-                <NavLink to ="/employees" activeClassName="nav-link-active">
-                    Employees
-                </NavLink>
-            </div>            
-                {props.loggedInStatus === "LOGGED_IN" ? dynamicLink("/portfolio-manager", "Portfolio Manager") : null}
+                <div className="nav-link-wrapper">
+                    {props.loggedInStatus === "LOGGED_IN" ? dynamicLink("/home", "Home") : null}
+                </div>
+                <div className="nav-link-wrapper">
+                    {props.loggedInStatus === "LOGGED_IN" ? dynamicLink("/inventory", "Inventory") : null}
+                </div>
+                <div className="nav-link-wrapper">
+                    {props.loggedInStatus === "LOGGED_IN" ? dynamicLink("/customers", "Customers") : null}  
+                </div>
+                <div className="nav-link-wrapper">
+                    {props.loggedInStatus === "LOGGED_IN" && props.adminUser === "1"? 
+                    dynamicLink("/employees", "Employees") : null}
+                </div>            
             {/*false ? <button>Add Blog</button>: null conditional if*/}
             </div>
             <div className="right-side">
-                UNAI DELAFU
+                
                 {props.loggedInStatus === 'LOGGED_IN' ? (
-                <a onClick={handleSignOut}>
-                    <FontAwesomeIcon icon="sign-out-alt"/>
-                </a>
+                    <div>
+                        <p>{props.userName}</p>
+                        <a onClick={handleSignOut}>
+                            <FontAwesomeIcon icon="sign-out-alt"/>
+                        </a>
+                    </div>
                 ) : null}
             </div>  
         </div>

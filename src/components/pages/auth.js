@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import loginImg from "../../../static/assets/images/auth/login.jpg"
+import loginImg from "../../../static/assets/images/auth/login1.jpg"
 import Login from "../auth/login"
 
 export default class Auth extends Component{
@@ -8,8 +8,9 @@ export default class Auth extends Component{
         this.hadleSuccessfulAuth = this.hadleSuccessfulAuth.bind(this)
         this.hadleUnsuccessfulAuth = this.hadleUnsuccessfulAuth.bind(this)
     }
-    hadleSuccessfulAuth(){
-        this.props.handleSuccessfulLogin();
+    hadleSuccessfulAuth(name, admin){
+        this.props.handleSuccessfulLogin(name,admin);
+        console.log("successfulAuth", name)
         this.props.history.push("/");   //Redirection to the home page
     }
     hadleUnsuccessfulAuth(){
@@ -18,17 +19,13 @@ export default class Auth extends Component{
     render(){
         return(           
             <div className="auth-page-wrapper">
-                <h1>Login class</h1>
-                <div className="left-column"              
-                style={{
-                    backgroundImage:`url(${loginImg})`
-                }}>
-
+                <div className="left-column">
+                    <img src={loginImg}/>                  
                 </div>
                 <div className="right-column">
                     <Login
-                        //hadleSuccessfulAuth = {this.hadleSuccessfulAuth}
-                        //hadleUnsuccessfulAuth = {this.hadleUnsuccessfulAuth}
+                        hadleSuccessfulAuth = {this.hadleSuccessfulAuth}
+                        hadleUnsuccessfulAuth = {this.hadleUnsuccessfulAuth}
                     />
                 </div>
             </div>

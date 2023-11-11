@@ -1,14 +1,17 @@
 import React, {Component} from "react";
 import axios from "axios";
+import { API_url, API_port } from "../constants/global";
 
 export default class Login extends Component{
     constructor(props){
         super(props);
 
         this.state = {
-            email:"",
+            user:"",
             password:"",
-            errorText:""
+            errorText:"",
+            API_endpoint: API_url + ":" + API_port + "/" + "employee-login"
+            //API_endopint: API_url + ":" + API_port + "/" + "employee/1"
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -23,24 +26,28 @@ export default class Login extends Component{
     }
 
     handleSubmit(event){
-        
-        axios.post("https://api.devcamp.space/sessions",
-            {
-                client: {
-                    email: this.state.email,
-                    password: this.state.password
-                }
-            },
-            { withCredentials: true }
-        ).then(response => {
-            if(response.data.status === 'created'){
-                console.log("You can come in...")
-                this.props.hadleSuccessfulAuth();
+        //-----
+        const formData = {sid : this.state.user, pswrd: this.state.password}
+        const axiosInstance = axios.create({
+        headers: {
+            "Content-Type": "application/json"
+        }
+        });
+        axiosInstance
+        .put(this.state.API_endpoint, formData)
+        .then(response => {
+            if(response.data[0].id !== null){
+                console.log("You can come in...");
+                var name = response.data[0].name_1 + " " + response.data[0].name_2
+                var admin = response.data[0].admin
+                this.props.hadleSuccessfulAuth(name, admin);
             }else{
-                this.setState({
-                    errorText: "Wrong email or password"
-                })
-                this.props.hadleUnsuccessfulAuth();
+                console.log("NOT ALLOWED");
+                this.setState(
+                    {
+                        errorText: 'Wrong User or Password'
+                    })  
+                this.props.hadleUnsuccessfulAuth();              
             }
             console.log("response", response);
         }).catch(error => {
@@ -60,17 +67,15 @@ export default class Login extends Component{
     render(){
         return(
             <div>
-                <h1>LOGIN TO ACCESS YOUR DASHBOARD</h1>
-                <h2>{this.state.email}</h2>
-                <h2>{this.state.errorText}</h2>
+                <h1>LOGIN TO ACCESS</h1>
+                <p>{this.state.errorText}</p>
 
-                {/*<form onSubmit={this.handleSubmit}>*/}
-                <form>
+                <form onSubmit={this.handleSubmit}>
                     <input 
-                        type="email"
-                        name="email"
-                        placeholder="Your email"
-                        value={this.state.email}
+                        type="text"
+                        name="user"
+                        placeholder="Your user"
+                        value={this.state.user}
                         onChange={this.handleChange}
                     />
 
