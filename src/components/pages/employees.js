@@ -8,7 +8,7 @@ export default class Employess extends Component {
         //instanciar state
         this.state = {
             API_endpoint: API_url + ":" + API_port + "/",
-            blogItems:[],
+            BBDDItems:[],
             totalCount: 0,
             currentPage: 0,
             isLoading: true,
@@ -28,6 +28,9 @@ export default class Employess extends Component {
             .get(getCustomersEndpoint)
             .then(response => {
                 console.log("Employees!!");
+                this.setState({
+                    BBDDItems: [...response.data]
+                })
                 /*
                 if(response.data[0].id !== null){                   
                     var name = response.data[0].name_1 + " " + response.data[0].name_2
@@ -42,7 +45,7 @@ export default class Employess extends Component {
                     this.props.hadleUnsuccessfulAuth();              
                 }
                 */
-                console.log("response", response);
+                console.log("BBDD_items:", this.state.BBDDItems);
             }).catch(error => {
                 console.log("Some error occurred", error)
                 this.setState(
