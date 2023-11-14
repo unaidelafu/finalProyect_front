@@ -15,7 +15,7 @@ import NavigationContainer from './navigation/navigation-container';
 import Auth from "./pages/auth";
 import Home from "./pages/home";
 import Customers from "./pages/customers";
-import Employees from "./pages/employees";
+import EmployeeManager from "./pages/employee-manager";
 import Inventory from "./pages/inventory";
 
 library.add(faTrash, faSignOutAlt, faEdit, faSpinner); //Añadir TODOS los iconos que se usa de fontAwesome
@@ -98,7 +98,7 @@ export default class App extends Component {
                 )}
               />
               <Route path="/customers" component = {Customers} />
-              <Route path="/employees" component = {Employees} />
+              <Route path="/employees" component = {EmployeeManager} />
               <Route path="/inventory" component = {Inventory} />
               <Route path="/home" component = {Home} />
               {/*this.state.loggedInStatus === "LOGGED_IN" ? this.authorizedPages(): null*/}

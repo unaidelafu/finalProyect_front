@@ -1,0 +1,123 @@
+/*
+.employee-list-top-wrapper{
+    width: 80%;
+    display: grid;
+    //grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 10px;
+    .employee-list-wrapper-1{
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 10px;
+      padding: 10px;
+    }
+    .employee-list-wrapper-2{
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 10px;
+      padding: 10px;
+    }
+    .employee-list-wrapper-3{
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 10px;
+      padding: 10px;
+    }
+    .employee-list-wrapper-4{
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 10px;
+      padding: 10px;
+    }
+    .employee-item-thumb-1{
+        @include employee-item-thumb($blue);
+        //border: 1px solid blue;
+    }
+    .employee-item-thumb-2{
+        @include employee-item-thumb(brown);
+        //border: 1px solid brown;
+    }
+    .employee-item-thumb-3{
+        @include employee-item-thumb(green);
+        //border: 1px solid green;
+    }
+    .employee-item-thumb-4{
+        @include employee-item-thumb(yellow);
+        //border: 1px solid yellow;
+    }
+  }
+*/
+
+
+
+
+
+
+
+
+
+
+
+//-----
+/*
+.employee-list-wrapper-2{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 10px;
+    padding: 10px;
+    @include employee-list-top-wrapper();
+}
+.employee-list-wrapper-3{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 10px;
+    padding: 10px;
+    @include employee-list-top-wrapper();
+}
+.employee-list-wrapper-4{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 10px;
+    padding: 10px;
+    @include employee-list-top-wrapper();
+}
+*/
+
+
+    .employee-list-wrapper{
+        width: 80%;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 10px;
+        padding: 10px;
+        .empty-field{
+            //width: 200px;    display: flex;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            grid-column: 1 / max;            
+        }
+        @media (max-width: 600px) {
+            .empty-field {
+                grid-column: 1 / 1;  
+            }
+        }
+        .employee-item-thumb-1{
+            @include employee-item-thumb($blue);
+            //border: 1px solid blue;
+        }
+        .employee-item-thumb-2{
+            @include employee-item-thumb(brown);
+            //border: 1px solid brown;
+        }
+        .employee-item-thumb-3{
+            @include employee-item-thumb(green);
+            //border: 1px solid green;
+        }
+        .employee-item-thumb-4{
+            @include employee-item-thumb(yellow);
+            //border: 1px solid yellow;
+        }
+    }
