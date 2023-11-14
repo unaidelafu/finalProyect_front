@@ -29,7 +29,6 @@ export default class EmployeeManager extends Component {
             axiosInstance
             .get(getCustomersEndpoint)
             .then(response => {
-                console.log("Employees!!");
                 //Add the job of the previus person to Print the job on the header of emplyees-container
                 if(Object.keys(response.data).length > 0){
                     var prevJob = "";
@@ -52,7 +51,7 @@ export default class EmployeeManager extends Component {
                     //BBDDItems: [...response.data]
                     BBDDItems: [...preparedResponse]
                 })
-                console.log("BBDD_items:", this.state.BBDDItems);
+                //console.log("BBDD_items:", this.state.BBDDItems);
             }).catch(error => {
                 console.log("Some error occurred", error)
                 this.setState(
@@ -70,8 +69,7 @@ export default class EmployeeManager extends Component {
 
     render(){
         return(
-            <div className="employee-manager-wrapper">
-                <h1>Hi Employees</h1> 
+            <div className="employee-manager-wrapper"> 
                 <EmployeesContainer
                 data={this.state.BBDDItems}   
                 />

@@ -98,7 +98,7 @@ export default class App extends Component {
                 )}
               />
               <Route path="/customers" component = {Customers} />
-              <Route path="/employees" component = {EmployeeManager} />
+              <Route path="/employee-manager" component = {EmployeeManager} />
               <Route path="/inventory" component = {Inventory} />
               <Route path="/home" component = {Home} />
               {/*this.state.loggedInStatus === "LOGGED_IN" ? this.authorizedPages(): null*/}
