@@ -9,16 +9,16 @@ import{
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 //Todos los iconos que vayas a utilizar en toda la aplicacion
-import { faTrash, faSignOutAlt, faEdit, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faSignOutAlt, faEdit, faSpinner, faCirclePlus} from "@fortawesome/free-solid-svg-icons";
 
 import NavigationContainer from './navigation/navigation-container';
 import Auth from "./pages/auth";
 import Home from "./pages/home";
 import Customers from "./pages/customers";
-import EmployeeManager from "./pages/employee-manager";
+import Employees from "./pages/employees";
 import Inventory from "./pages/inventory";
 
-library.add(faTrash, faSignOutAlt, faEdit, faSpinner); //Añadir TODOS los iconos que se usa de fontAwesome
+library.add(faTrash, faSignOutAlt, faEdit, faSpinner, faCirclePlus); //Añadir TODOS los iconos que se usa de fontAwesome
 
 export default class App extends Component {
   constructor(props){
@@ -98,7 +98,7 @@ export default class App extends Component {
                 )}
               />
               <Route path="/customers" component = {Customers} />
-              <Route path="/employee-manager" component = {EmployeeManager} />
+              <Route path="/employees" component = {Employees} />
               <Route path="/inventory" component = {Inventory} />
               <Route path="/home" component = {Home} />
               {/*this.state.loggedInStatus === "LOGGED_IN" ? this.authorizedPages(): null*/}

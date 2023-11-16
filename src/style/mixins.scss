@@ -46,7 +46,7 @@
     color: $warning
   }
 
-  @mixin employee-item-thumb($color){
+  @mixin employee-item($color){
 
     border: 1px solid $color;
     border-radius: 8px;
@@ -56,7 +56,7 @@
     align-items: center;
     justify-content: space-between;
     //min-width: 150px;
-    .employee-thumb-img img{
+    .employee-img img{
         width: 100px;
         height: 120px;
         object-fit: cover;
@@ -90,54 +90,3 @@
     }
 
 }
-
-/*
-@mixin employee-list-top-wrapper(){
-  width: 80%;
-  display: grid;
-  //grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-template-columns: 1fr;
-  gap: 10px;
-  padding: 10px;
-  .employee-list-wrapper-1{
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 10px;
-    padding: 10px;
-  }
-  .employee-list-wrapper-2{
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 10px;
-    padding: 10px;
-  }
-  .employee-list-wrapper-3{
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 10px;
-    padding: 10px;
-  }
-  .employee-list-wrapper-4{
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 10px;
-    padding: 10px;
-  }
-  .employee-item-thumb-1{
-      @include employee-item-thumb($blue);
-      //border: 1px solid blue;
-  }
-  .employee-item-thumb-2{
-      @include employee-item-thumb(brown);
-      //border: 1px solid brown;
-  }
-  .employee-item-thumb-3{
-      @include employee-item-thumb(green);
-      //border: 1px solid green;
-  }
-  .employee-item-thumb-4{
-      @include employee-item-thumb(yellow);
-      //border: 1px solid yellow;
-  }
-}
-*/

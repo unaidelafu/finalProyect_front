@@ -6,7 +6,8 @@
         background-size: cover;
         img{
             width: 100%;
-            height: calc(100vh - 84px);
+            height: 100%;
+            //height: calc(100vh - 84px);
             object-fit: cover;
             border-radius: 5px;
         }
@@ -20,5 +21,10 @@
     p{
         @include error-message();
     }
+}
+@media (max-width: 600px) {
+    .auth-page-wrapper {
+        grid-template-columns: 1fr;
 
+    }
 }

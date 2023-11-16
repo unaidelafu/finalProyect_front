@@ -53,7 +53,7 @@ const NavigationContainer =  (props) =>{
                 </div>
                 <div className="nav-link-wrapper">
                     {props.loggedInStatus === "LOGGED_IN" && props.adminUser === "1"? 
-                    dynamicLink("/employee-manager", "Employees") : null}
+                    dynamicLink("/employees", "Employees") : null}
                 </div>            
             {/*false ? <button>Add Blog</button>: null conditional if*/}
             </div>
