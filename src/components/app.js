@@ -17,6 +17,11 @@ import Home from "./pages/home";
 import Customers from "./pages/customers";
 import Employees from "./pages/employees";
 import Inventory from "./pages/inventory";
+import Footer from './footer/footer';
+import NoMatch from "./pages/no-match";
+
+
+import EmployeeModal from "./modals/employee-modal.js";
 
 library.add(faTrash, faSignOutAlt, faEdit, faSpinner, faCirclePlus); //Añadir TODOS los iconos que se usa de fontAwesome
 
@@ -25,35 +30,82 @@ export default class App extends Component {
     super(props);
     this.state={
       loggedInStatus: "NOT_LOGGED_IN",
-      userName: "Jokin",
-      adminUser: 0
+      userName: "",
+      adminUser: 0,
+      loggedUser: {},
+      employeeModalIsOpen: false,
+      employeeToEdit: {},
+      ownUser: true
     }
     this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
     this.handleUnsuccessfulLogin = this.handleUnsuccessfulLogin.bind(this);
     this.handleSuccessfulLogout = this.handleSuccessfulLogout.bind(this);
+    this.handleOwnUserEdit = this.handleOwnUserEdit.bind(this);
+
+    this.handleSuccessfullNewSubmission = this.handleSuccessfullNewSubmission.bind(this);
+    this.handleModalClose = this.handleModalClose.bind(this);
+    this.clearEmployeeToEdit = this.clearEmployeeToEdit.bind(this);
     //this.checkLoginStatus = this.checkLoginStatus.bind(this);
   }
-  handleSuccessfulLogin(name,admin){
-    console.log("successfulLogin", name)
+  handleSuccessfulLogin(user){
+    console.log("successfulLogin user", user.name_1)
     this.setState({
       loggedInStatus: "LOGGED_IN",
-      userName: name,
-      adminUser: admin
+      //userName: name,
+      userName: user.name_1 + " " + user.name_2,
+      adminUser: user.admin,
+      loggedUser: user
     })
   }
   handleUnsuccessfulLogin(){
     this.setState({
-      loggedInStatus: "NOT_LOGGED_IN"
+      loggedInStatus: "NOT_LOGGED_IN",
+      userName: "",
+      adminUser: 0,
+      loggedUser: []
     })
   }  
 
   handleSuccessfulLogout(){
     this.setState({
-      loggedInStatus: "NOT_LOGGED_IN"
+      loggedInStatus: "NOT_LOGGED_IN",
+      userName: "",
+      adminUser: 0,
+      loggedUser: []
     })
   }  
+  handleOwnUserEdit(){
+    //call to the modal
+    console.log("Editandome")
+    this.setState({
+      employeeToEdit: this.state.loggedUser,
+      employeeModalIsOpen: true
+    })
+  }
 
- 
+ //EMployee Modal section:
+
+ handleSuccessfullNewSubmission(userName){
+  this.setState({
+      employeeModalIsOpen: false,
+      userName: userName
+  })
+}
+
+handleModalClose(){
+  this.setState({
+      employeeModalIsOpen: false
+  });     
+}
+
+clearEmployeeToEdit(){
+  this.setState({
+      employeeToEdit: {}
+  })
+}
+
+//----
+
   componentDidMount(){
     //Siempre que se llega a esta pagina tiene como logout 
     this.handleSuccessfulLogout();
@@ -83,13 +135,21 @@ export default class App extends Component {
             <NavigationContainer 
             loggedInStatus = {this.state.loggedInStatus}
             handleSuccessfulLogout = {this.handleSuccessfulLogout}
+            handleOwnUserEdit = {this.handleOwnUserEdit}
             userName = {this.state.userName}
             adminUser = {this.state.adminUser}            
             />
+            <EmployeeModal
+            handleSuccessfullNewSubmission = {this.handleSuccessfullNewSubmission}
+            handleModalClose={this.handleModalClose}            
+            modalIsOpen = {this.state.employeeModalIsOpen} 
+            employeeToEdit = {this.state.employeeToEdit}
+            ownUser = {this.state.ownUser}
+            clearEmployeeToEdit = {this.clearEmployeeToEdit}/>
             <Switch>
             <Route 
                 path="/auth" 
-                render={props => (
+                render = {props => (
                   <Auth
                     {...props}
                     handleSuccessfulLogin = {this.handleSuccessfulLogin}
@@ -97,17 +157,16 @@ export default class App extends Component {
                   />
                 )}
               />
-              <Route path="/customers" component = {Customers} />
-              <Route path="/employees" component = {Employees} />
-              <Route path="/inventory" component = {Inventory} />
-              <Route path="/home" component = {Home} />
+              <Route exact path="/customers" component = {Customers} />
+              <Route exact path="/employees" component = {Employees} />
+              <Route exact path="/inventory" component = {Inventory} />
+              <Route exact path="/home" component = {Home} />
               {/*this.state.loggedInStatus === "LOGGED_IN" ? this.authorizedPages(): null*/}
-         
+              <Route component = {NoMatch} /*Siempre al final, porque las pages funcionan como if else*//>        
             </Switch>
 
             <div className='app'>
-              <h1>Unai de la fuente </h1>
-              <h2>React Redux Router</h2>
+              <p> <Footer/> </p>
             </div>
           </div>
         </Router>

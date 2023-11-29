@@ -1,10 +1,14 @@
+.employee-manager-wrapper{
+    padding:30px;
     .employee-list-wrapper{
-        width: 90%;
+        //width: 90%;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(300px,395px));
+        //grid-template-columns: 1fr 1fr 1fr;
         align-items: start;
         gap: 10px;
         padding: 10px;
+        /*
         .empty-field{
             //width: 200px;    display: flex;
             display: flex;
@@ -13,24 +17,54 @@
             justify-content: space-between;
             grid-column: 1 / max;            
         }
+        */
+        /*
+        @media (max-width: 1200px) {
+            .empty-field {
+                //grid-template-columns: 1fr 1fr;
+                grid-column: 2 / 1;  
+            }
+        }
         @media (max-width: 600px) {
             .empty-field {
+                //grid-template-columns: 1fr;
                 grid-column: 1 / 1;  
             }
         }
+        */
         .employee-item-1{
             @include employee-item($dark-teal);
             //border: 1px solid blue;
             &:hover{
+                .title{
+                    color: $offwhite;
+                    transition: 1s ease-in-out;
+                }
+                .actions{
+                    .action-icon{
+                        color: $offwhite;
+                        transition: 1s ease-in-out;
+                    }   
+                }            
                 background-color: $dark-teal;
-                transition: 2s
+                transition: 1s ease-in-out;
             }
         }
         .employee-item-2{
             @include employee-item(rgba(202, 60, 60, 0.685));
             &:hover{
+                .title{
+                    color: $offwhite;
+                    transition: 1s ease-in-out;
+                }
+                .actions{
+                    .action-icon{
+                        color: $offwhite;
+                        transition: 1s ease-in-out;
+                    }   
+                }
                 background-color: rgba(202, 60, 60, 0.685);
-                transition: 2s
+                transition: 1s ease-in-out;
             }
             
             //border: 1px solid brown;
@@ -38,17 +72,54 @@
         .employee-item-3{
             @include employee-item($dark-corp-color);
             &:hover{
+                .title{
+                    color: $offwhite;
+                    transition: 1s ease-in-out;
+                }
+                .actions{
+                    .action-icon{
+                        color: $offwhite;
+                        transition: 1s ease-in-out;
+                    }   
+                } 
                 background-color: $dark-corp-color;
-                transition: 2s
+                transition: 1s ease-in-out;
             }
             //border: 1px solid green;
         }
         .employee-item-4{
             @include employee-item(rgb(218, 218, 44));
             &:hover{
+                .title{
+                    color: $offwhite;
+                    transition: 1s ease-in-out;
+                }
+                .actions{
+                    .action-icon{
+                        color: $offwhite;
+                        transition: 1s ease-in-out;
+                    }   
+                }  
                 background-color: rgb(218, 218, 44);
-                transition: 2s
+                transition: 1s ease-in-out;
             }
             //border: 1px solid yellow;
         }
     }
+    .actions{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-gap:15px;
+        
+        .action-icon{
+            justify-self: center;
+            cursor: pointer;
+            color:$corp-color;
+            font-size: 3.5em;
+            transition: 0.5s ease-in-out;
+            &:hover{
+                color: $dark-corp-color;
+            }
+        }
+    }
+}

@@ -1,9 +1,7 @@
 .employee-form-wrapper{
     @include base-grid();
-    grid-template-columns: 1fr;
-    //display: flex;
-    //flex: 0 auto;
-    padding: 42px;
+    grid-template-columns: 0.75fr 2fr;
+    padding: 24px;
 
     @include input-element();
     input{
@@ -16,13 +14,15 @@
     }
     .image-uploaders{
         @include base-grid();
-        grid-template-columns: 200px 200px 200px;
+        //grid-template-columns: 200px 200px 200px;
 
         .employee-manager-image-wrapper{
+            text-align: center;
             img{
-                width: 100%;
-                height: 120px;
                 object-fit: cover;
+                width: 40%;
+                max-height: 100%;
+
                 border-radius: 5px;
             }
             .image-removal-link{
@@ -37,5 +37,26 @@
             }
         }
         
+    }
+    .btn{
+        @include base-btn();
+    }
+    .btn-del{
+        @include base-btn();
+        background-color: $warning-light;
+        &:hover{
+            background-color: $warning;
+        }
+    }
+    
+    .select-element{
+        @include selector();
+    }
+
+}
+@media (max-width: 600px) {
+    .employee-form-wrapper  {
+        grid-template-columns: 1fr;
+
     }
 }

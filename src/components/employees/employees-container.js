@@ -7,26 +7,18 @@ const EmployeesContainer = (props) =>{
     const employeesList = props.data.map(employeeItem =>{
             if (props.data.length > 0){
                     return(     
-                        //header of the jobs
+                        //header of the jobs 
                         <div key={"emp" + employeeItem.id} className={"employee-list-wrapper-" + employeeItem.job_id}>                                                          
                             <div className="job-header">     
-                                <div className={"employee-item-" + employeeItem.job_id}>
+                                <a className={"employee-item-" + employeeItem.job_id} onClick={()=> props.handleEditClick(employeeItem)}>
                                     <div className="employee-img">
                                         <img src={employeeItem.img_url}/>
                                     </div>
                                     <div className="text-content">
-                                        <div className="title">{employeeItem.name_1 + " " + employeeItem.name_2}</div>
-                                        <div className="job">{employeeItem.job}</div>
-                                        <div className="actions">
-                                            <a className = "action-icon" onClick={()=> props.handleEditClick(employeeItem)}>
-                                                <FontAwesomeIcon icon="edit" />
-                                            </a>
-                                            <a className = "action-icon" onClick={()=> props.handleDeleteClick(employeeItem)}>
-                                                <FontAwesomeIcon icon="trash" />
-                                            </a>
-                                        </div>
+                                        <div className="title">{employeeItem.name_1 + " " + employeeItem.name_2}</div>                        
+                                        <div className="title">{employeeItem.phone_num}</div>
                                     </div>
-                                </div> 
+                                </a> 
                             </div> 
                         </div>
                     )

@@ -1,9 +1,15 @@
 @import "./variables.scss";
 
 .nav-wrapper{
+    /*
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    */
     display: flex;
     justify-content: space-between;
+    
     padding: 30px;
+    border-bottom: solid $corp-color;
 }
 .right-side{
     a{
@@ -12,6 +18,15 @@
         color:$corp-color;
         transition: 0.5s ease-in-out;
 
+        &:hover{
+            color: $dark-corp-color;
+        }
+    }
+    .logged-user{
+        color: $grey;
+        cursor: pointer;
+        transition: 0.5s ease-in-out;
+        
         &:hover{
             color: $dark-corp-color;
         }
@@ -41,7 +56,8 @@
     &:hover{
 
         border-bottom: 1px solid $corp-color;
-        color: $corp-color;       
+        color: $corp-color;     
+        transition: 0.5s ease-in-out;  
     }
 
     .nav-link-active{

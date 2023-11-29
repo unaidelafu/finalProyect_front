@@ -1,10 +1,23 @@
 .one-column {
     @include base-grid();
+    
+    padding-top: 10px;
+    padding-bottom: 10px;
+    
     grid-template-columns: 1fr;
   }
   
   .two-column {
     @include base-grid();
+    padding-top: 10px;
+    padding-bottom: 10px;
     grid-template-columns: 1fr 1fr;
+
   }
   
+  @media (max-width: 600px) {
+    .two-column  {
+        grid-template-columns: 1fr;
+
+    }
+}

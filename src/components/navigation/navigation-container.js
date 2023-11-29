@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink, withRouter } from "react-router-dom"; //si empieza en minuscula HOC high order component
+import EmployeeModal from "../modals/employee-modal.js";
 
 //convert to functional component:
 const NavigationContainer =  (props) =>{
@@ -32,8 +33,28 @@ const NavigationContainer =  (props) =>{
         props.history.push("/auth");
         props.handleSuccessfulLogout();
     };
-    
-
+    const handleEditClick = () =>{
+        console.log("Clicked")
+        props.handleOwnUserEdit();
+        /*
+        this.setState({
+            employeeToEdit: props.loggedUser,
+            employeeModalIsOpen: true
+        })
+        */
+    }
+    /*
+    const clearEmployeeToEdit = ()=>{
+        this.setState({
+            employeeToEdit: {}
+        })
+    }
+    const handleModalClose = ()=>{
+        this.setState({
+            employeeModalIsOpen: false
+        })      
+    }
+    */
     return(
         <div className="nav-wrapper">
             <div className="left-side">
@@ -60,8 +81,13 @@ const NavigationContainer =  (props) =>{
             <div className="right-side">
                 
                 {props.loggedInStatus === 'LOGGED_IN' ? (
-                    <div>
-                        <p>{props.userName}</p>
+                    <div className="logged-user">
+                        {/*<EmployeeModal
+                            handleModalClose={handleModalClose}            
+                            modalIsOpen = {this.state.employeeModalIsOpen} 
+                            employeeToEdit = {this.state.employeeToEdit}
+                clearEmployeeToEdit = {clearEmployeeToEdit}/>*/}
+                        <a onClick={handleEditClick}>{props.userName}</a>
                         <a onClick={handleSignOut}>
                             <FontAwesomeIcon icon="sign-out-alt"/>
                         </a>

@@ -17,7 +17,9 @@ export default class Employees extends Component {
             currentPage: 0,
             isLoading: true,
             employeeModalIsOpen: false,
-            employeeToEdit: {}
+            ownUser: false,
+            employeeToEdit: {},
+            
         };
         this.handleModalClose = this.handleModalClose.bind(this);
         this.handleNewEmployeeClick = this.handleNewEmployeeClick.bind(this);
@@ -36,12 +38,14 @@ export default class Employees extends Component {
         })
     }
 
-    handleSuccessfullNewSubmission(newEmployee){
-
+    handleSuccessfullNewSubmission(){
+        this.getEmployees();
+        //handleSuccessfullNewSubmission(newEmployee){
         this.setState({
-            employeeModalIsOpen: false,
-            //---->blogItems: [blog].concat(this.state.blogItems)  //El clog creado, se le concatena los blogs ya existentes, para visualizar todo, el nuevo primero
+            employeeModalIsOpen: false
+            //---->blogItems: [blog].concat(this.state.blogItems)  //El blog creado, se le concatena los blogs ya existentes, para visualizar todo, el nuevo primero
         })
+        
     }
 
     handleEditClick(employeeItem){
@@ -111,8 +115,8 @@ export default class Employees extends Component {
         const EmployeeJobTypes = employees.map(employeesForJob =>{
             //console.log("Employees for job:", employeesForJob )
             return(
-                <div className="Employees-grid-wrapper">
-                    {employeesForJob[0].job + "s"}
+                <div className="employees-grid-wrapper">
+                    <div className="employee-job">{employeesForJob[0].job + "s"}</div>
                     <EmployeesContainer
                     data={employeesForJob}   
                     handleEditClick={this.handleEditClick}     
@@ -136,11 +140,14 @@ export default class Employees extends Component {
                     handleModalClose={this.handleModalClose}            
                     modalIsOpen = {this.state.employeeModalIsOpen} 
                     employeeToEdit = {this.state.employeeToEdit}
+                    ownUser = {this.state.ownUser}
                     clearEmployeeToEdit = {this.clearEmployeeToEdit}/>
                 
                 <div className="new-employee-link">
+                    <div className="actions">
                         <a className = "action-icon" onClick={this.handleNewEmployeeClick}>
                             <FontAwesomeIcon icon="fa-solid fa-circle-plus" /></a>
+                    </div>
                 </div>
                 {this.iterateJobGroups()}
                 

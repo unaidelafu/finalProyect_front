@@ -8,9 +8,8 @@ export default class Auth extends Component{
         this.hadleSuccessfulAuth = this.hadleSuccessfulAuth.bind(this)
         this.hadleUnsuccessfulAuth = this.hadleUnsuccessfulAuth.bind(this)
     }
-    hadleSuccessfulAuth(name, admin){
-        this.props.handleSuccessfulLogin(name,admin);
-        console.log("successfulAuth", name)
+    hadleSuccessfulAuth(user){
+        this.props.handleSuccessfulLogin(user);
         this.props.history.push("/");   //Redirection to the home page
     }
     hadleUnsuccessfulAuth(){

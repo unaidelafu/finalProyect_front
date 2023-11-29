@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { DropzoneComponent } from "react-dropzone-component";
+import "../../../node_modules/dropzone/dist/min/dropzone.min.css";
+import "../../../node_modules/react-dropzone-component/styles/filepicker.css";
 
 import { API_url, API_port, img_API_id, img_API_url, img_API_default_employee_url } from "../constants/global";
 import EmployeeJobTypes from "./employee-job-types";
+
 export default class EmployeesForm extends Component {
     constructor(props){
         super(props);
@@ -17,12 +20,16 @@ export default class EmployeesForm extends Component {
             job:"1",
             mail: "",
             phone_number:"",
-            password:"",
+            user_pass:"",
             status:"ACTIVE",
             employee_img_url:"",
             employee_img_url_prev:"",
+            new_pass: "",
+            new_pass_repeat: "",
             error_message:"",
-            editMode: false
+            editMode: false,
+            own_user: true,
+            button: "save"
             
         }
         this.handleChange = this.handleChange.bind(this);
@@ -37,10 +44,22 @@ export default class EmployeesForm extends Component {
         this.buildForm = this.buildForm.bind(this);
         this.apiPost = this.apiPost.bind(this);
         this.apiPut = this.apiPut.bind(this);
+        this.apiDel = this.apiDel.bind(this);
+        this.checkNewPass = this.checkNewPass.bind(this);
+        this.modalCLose = this.modalCLose.bind(this);
 
         this.imgRef = React.createRef();
 
         
+    }
+    checkNewPass(){
+        var newpasscorrect = false
+        var newPass = this.state.new_pass
+        var newPass_repeat = this.state.new_pass_repeat
+        if (newPass === newPass_repeat){
+            newpasscorrect = true
+        }
+        return newpasscorrect
     }
     deleteImage(){
         this.setState({
@@ -74,7 +93,6 @@ export default class EmployeesForm extends Component {
 
     buildForm(employee_img_url){
         var object = {};
-
         let formData = new FormData();
         formData.append("sid", this.state.sid);
         formData.append("name_1", this.state.name);
@@ -82,17 +100,29 @@ export default class EmployeesForm extends Component {
         formData.append("mail", this.state.mail);
         formData.append("phone_num", this.state.phone_number);
         formData.append("status", this.state.status);
-        if(this.state.password){
-            formData.append("pswrd", this.state.password); 
+        //TODO: comprobar el state own user y la nueva contraseña
+        
+        if(this.state.own_user === true && this.state.new_pass){
+            formData.append("pswrd", this.state.new_pass); 
         }else{
-            formData.append("pswrd", this.state.sid); 
-        }                  
+            if(this.state.user_pass){
+                //si no es own user, nunca se actualiza el password
+                formData.append("pswrd", ""); 
+            }else{
+                //New user, default sid is the password
+                formData.append("pswrd", this.state.sid); 
+            }     
+        }
+        
+             
         formData.append("job", this.state.job);
+        //formData.append("img_url", employee_img_url);
+        
         if(this.state.employee_img_url){
             formData.append("img_url", this.state.employee_img_url);   
         }else{
             formData.append("img_url", employee_img_url);  //parse
-        }     
+        }   
         formData.forEach(function(value, key){
             object[key] = value;
         });
@@ -102,9 +132,9 @@ export default class EmployeesForm extends Component {
     //Create employee
     apiPost(employee_img_url){
         //App API
-        const formData = this.buildForm(employee_img_url)
-        console.log("sending data:",formData)
-        var createEmployeeEndpoint = this.state.apiUrl + "employee"
+        const formData = this.buildForm(employee_img_url);
+        //console.log("sending data:",formData);
+        var createEmployeeEndpoint = this.state.apiUrl + "employee";
         const axiosInstance = axios.create({
             headers: {
                 "Content-Type": "application/json",
@@ -114,15 +144,18 @@ export default class EmployeesForm extends Component {
             axiosInstance
             .post(createEmployeeEndpoint,formData)
             .then(resp =>{
-                console.log("BBDD api response", resp);   
+                //console.log("BBDD api response", resp);   
                 if(resp.data.status == "ERROR"){
                     this.setState({
                         error_message: resp.data.message
                     })
-                }            
+                }else{
+                    //Wait the response to close            
+                    this.modalCLose();
+                 }              
 
             }).catch(error => {
-                    console.log("image error", error);
+                    //console.log("image error", error);
                     this.setState({
                         error_message: resp.data.message
                     })                    
@@ -132,9 +165,9 @@ export default class EmployeesForm extends Component {
     //Update employee
     apiPut(employee_img_url){
          //App API
-         const formData = this.buildForm(employee_img_url)
-         console.log("sending data EDIT:",formData)
-         var createEmployeeEndpoint = this.state.apiUrl + "employee/" + this.state.id
+         const formData = this.buildForm(employee_img_url);
+         //console.log("sending data EDIT:",formData);
+         var createEmployeeEndpoint = this.state.apiUrl + "employee/" + this.state.id;
          const axiosInstance = axios.create({
              headers: {
                  "Content-Type": "application/json",
@@ -149,8 +182,10 @@ export default class EmployeesForm extends Component {
                      this.setState({
                          error_message: resp.data.message
                      })
+                 }else{
+                    //Wait the response to close            
+                    this.modalCLose();
                  }            
- 
              }).catch(error => {
                      console.log("image error", error);
                      this.setState({
@@ -158,94 +193,127 @@ export default class EmployeesForm extends Component {
                      })                    
              });       
     }
+    //Delete employee
+    apiDel(){
+          //App API
+          var createEmployeeEndpoint = this.state.apiUrl + "employee/" + this.state.id
+          const axiosInstance = axios.create({
+              headers: {
+                  "Content-Type": "application/json",
+                  "Access-Control-Allow-Origin": "*"
+              }
+              });
+              axiosInstance
+              .delete(createEmployeeEndpoint)
+              .then(resp =>{
+                  console.log("BBDD api response", resp);   
+                  if(resp.data.status == "ERROR"){
+                      this.setState({
+                          error_message: resp.data.message
+                      })
+                    }else{
+                        //Wait the response to close            
+                        this.modalCLose();
+                        }   
+              }).catch(error => {
+                      console.log("image error", error);
+                      this.setState({
+                          error_message: resp.data.message
+                      })                    
+              });         
+    }
+    //Close modal
+    modalCLose(){
+        if (this.state.error_message ===""){
+            //no errors. close.
+            this.props.handleSuccessfullFormSubmission(this.state.name + " " + this.state.surname)
+        }
+    }
     handleSubmit(event){
         //check all the fields.
-        var fieldsCorrect = this.checkFields()
-        console.log("Edit mode:", this.state.editMode)
-        if(fieldsCorrect === true){
-            var image_url = "";
-            //TODO
-                //COMPROBAR SI SE ESTA EN EDIT MODE
-                    //COMPROBAR SI LA IMAGEN employee_img_url_prev HA CAMBIADO
-                    //EJECUTAR IMAGE API
-                    //API UPDATE
-            if(this.state.employee_img && 
-                this.state.employee_img_url_prev != this.state.employee_img_url){
-                //console.log("image", this.state.employee_img)
-                //Image API
-                var file = this.state.employee_img;
-                var form = new FormData();
-                form.append("image", file)
-                axios({
-                    method: "POST",
-                    url: img_API_url,
-                    timeout: 0,
-                    processData: false,
-                    mimeType: "multipart/form-data",
-                    contentType: false,
-                    data: form
-            
-                }).then(response =>{
-                    console.log("image response", response);
-                    //Set state is not working here:
-                    this.setState = ({
-                        employee_img_url: response.data.data.url
-                    });     
-                    image_url = response.data.data.url;
-                    if(this.state.editMode === false){
-                        this.apiPost(image_url);
-                    }else{
-                        this.apiPut(image_url);
-                    }           
-                }).catch(error => {
-                        console.log("image error", error);
-                        this.setState({
-                            error_message: resp.data.message
-                        })
-                });
-            }else{
-                //Default img in image API, No Img API
-                if(!this.state.employee_img_url){
-                    this.setState({
-                        employee_img_url : img_API_default_employee_url
-                    })
-                    image_url = img_API_default_employee_url;
-                }
-
-                if(this.state.editMode === false){
-                    this.apiPost(image_url); 
+        var fieldsCorrect = this.checkFields(); //Check fields and new password
+        //console.log("Edit mode:", this.state.editMode);
+        if(this.state.button === "save"){
+            //console.log("Saving...");
+            if(fieldsCorrect === true){
+                var image_url = "";   
+                if(this.state.employee_img || 
+                    this.state.employee_img_url_prev != this.state.employee_img_url){
+                    //console.log("image", this.state.employee_img)
+                    //Image API
+                    var file = this.state.employee_img;
+                    var form = new FormData();
+                    form.append("image", file)
+                    axios({
+                        method: "POST",
+                        url: img_API_url,
+                        timeout: 0,
+                        processData: false,
+                        mimeType: "multipart/form-data",
+                        contentType: false,
+                        data: form
+                
+                    }).then(response =>{
+                        //console.log("image response", response);
+                        //Set state is not working here:
+                        this.setState = ({
+                            employee_img_url: response.data.data.url
+                        });     
+                        image_url = response.data.data.url;
+                        if(this.state.editMode === false){
+                            this.apiPost(image_url);
+                        }else{
+                            this.apiPut(image_url);
+                        }           
+                    }).catch(error => {
+                            //console.log("image error", error);
+                            this.setState({
+                                error_message: resp.data.message
+                            })
+                    });
                 }else{
-                    this.apiPut(image_url); 
-                }
+                    //Default img in image API, No Img API
+                    if(!this.state.employee_img_url){
+                        this.setState({
+                            employee_img_url : img_API_default_employee_url
+                        })
+                        image_url = img_API_default_employee_url;
+                    }
+    
+                    if(this.state.editMode === false){
+                        console.log("New employee");
+                        this.apiPost(image_url); 
+                    }else{
+                        console.log("Updating employee");
+                        this.apiPut(image_url); 
+                    }
+    
+                       
+                } 
 
-                   
-            } 
+            }else{
+                this.setState({
+                    error_message : "Please, complete all the fields correctly"
+                })
+            }            
         }else{
-            this.setState({
-                error_message : "Please, complete all the fields"
-            })
+            
+            const answer = window.confirm("Deleting Employee, are you sure?");
+            if (answer) {
+              //console.log("Deleting...");
+              this.apiDel();
+            }
         }
-        //check image
-            //If no image no update to the images api
-            //else update to the images api
-        //BBDD api BUIL FORM
-        //---
-        //this.imgCheck()
-
-
-
-
-
-
-
-
-
         event.preventDefault();
     }
     checkFields(){
         var fieldsCorrect = true
         if(this.state.sid.length < 1 || this.state.sid.name < 1 || this.state.sid.surname < 1){
             fieldsCorrect = false;
+        }else{
+            if(this.state.own_user === true && this.state.new_pass!==""){
+                fieldsCorrect = this.checkNewPass();
+            }
         }
         return fieldsCorrect
     }
@@ -315,8 +383,7 @@ export default class EmployeesForm extends Component {
 
     componentDidUpdate() {
         //comprueba si hay para editar, si lo hay almacena los valores en un const
-        console.log("employee FORM props",Object.keys(this.props.employeeToEdit));
-        console.log("Employeessss", this.props.employeeToEdit);
+        //console.log("Employees", this.props.employeeToEdit);
         
         if (Object.keys(this.props.employeeToEdit).length > 0) {
           const {
@@ -335,9 +402,9 @@ export default class EmployeesForm extends Component {
             prevJob
           } = this.props.employeeToEdit;
 
-          this.props.clearEmployeeToEdit();    //Limpia los valores que se muestran en portfolio.
-
-          this.setState({   //Completa la pantalla portfolio con los datos.
+          this.props.clearEmployeeToEdit();    //Limpia los valores que se muestran en form.
+          console.log("Loaded image:", img_url);
+          this.setState({   //Completa la pantalla form con los datos.
             admin: admin,
             id: id,
             employee_img_url: img_url,
@@ -348,29 +415,27 @@ export default class EmployeesForm extends Component {
             name: name_1,
             surname: name_2,
             phone_number: phone_num,
-            password: pswrd,
+            user_pass: pswrd,
             sid: sid,
             status: status,
             editMode: true,
+            new_pass: "",
+            new_pass_repeat: "",
+            own_user: this.props.ownUser
             //---
           })
-          
         }
         
       }
 
 
-
-
-
-    //-------------
-
     handleChange(event){
         this.setState({
-            [event.target.name]: event.target.value //Porque el key del state puede ser para title o blog_status
+            [event.target.name]: event.target.value,
+            error_message: ""
         })
     }
-    //-------------
+
   render() {
     const jobTypes = this.state.employee_types.map(employeeType =>{ //map returns an array
         return <EmployeeJobTypes key={employeeType.id} employeeJobType={employeeType}/>;
@@ -421,11 +486,12 @@ export default class EmployeesForm extends Component {
                     <input
                     type="text"
                     name="sid"
-                    placeholder="Employee Identity Doc Num"
+                    placeholder="Identity Doc Num"
                     value={this.state.sid}
                     onChange={this.handleChange}
                     />
                     <select
+                    /*{ TODO: /*...this.state.own_user === false ? "disabled" : null }*/
                     name="job"  //identico al state
                     value={this.state.job}
                     onChange={this.handleChange}
@@ -438,23 +504,46 @@ export default class EmployeesForm extends Component {
                     <input
                     type="text"
                     name="mail"
-                    placeholder="Employee e-mail"
+                    placeholder="e-mail"
                     value={this.state.mail}
                     onChange={this.handleChange}
                     />
                     <input
-                    type="text"
+                    type="tel"
                     name="phone_number"  //identico al state
-                    placeholder="Employee Phone Number"
+                    placeholder="Phone Number"
                     value={this.state.phone_number}
                     onChange={this.handleChange}
                     />                        
                 </div>  
+                {this.state.own_user === true ?
+                    <div className="two-column">
+                        <input
+                        type="text"
+                        name="new_pass"
+                        placeholder="New Password"
+                        value={this.state.new_pass}
+                        onChange={this.handleChange}
+                        />
+                        <input
+                        type="text"
+                        name="new_pass_repeat"  //identico al state
+                        placeholder="Repeat New Password"
+                        value={this.state.new_pass_repeat}
+                        onChange={this.handleChange}
+                        />                        
+                    </div> : null }
+                
                 <div className="one-column">
                     <div className="error-message-wrapper">
                         {this.state.error_message}
                     </div>
-                    <button className="btn" type="submit">Save</button>
+                    <button className="btn" onClick={() => (this.setState({button: "save"}))} type="submit">Save</button>
+                    {this.state.own_user === false && this.state.editMode === true ?
+                        <button className="btn-del" onClick={() => (this.setState({button: "delete"}))}type="submit">Delete Employee</button>
+                    : null
+                    }
+                    
                 </div>             
             </div>                    
         </form>

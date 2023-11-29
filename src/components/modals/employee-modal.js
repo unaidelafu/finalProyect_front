@@ -111,7 +111,8 @@ export default class EmployeeModal extends Component{
                 <EmployeesForm 
                 handleSuccessfullFormSubmission = {this.handleSuccessfullFormSubmission}
                 employeeToEdit = {this.props.employeeToEdit}
-                clearEmployeeToEdit = {this.props.clearEmployeeToEdit}/>             
+                clearEmployeeToEdit = {this.props.clearEmployeeToEdit}
+                ownUser = {this.props.ownUser}/>             
             </ReactModal>
             
         );

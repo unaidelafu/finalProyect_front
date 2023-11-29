@@ -10,8 +10,8 @@ export default class Login extends Component{
             user:"",
             password:"",
             errorText:"",
-            API_endpoint: API_url + ":" + API_port + "/" + "employee-login"
-            //API_endopint: API_url + ":" + API_port + "/" + "employee/1"
+            API_endpoint: API_url + ":" + API_port + "/" + "employee-login",
+            loggedUser: []
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -38,9 +38,11 @@ export default class Login extends Component{
         .then(response => {
             if(response.data[0].id !== null){
                 console.log("You can come in...");
-                var name = response.data[0].name_1 + " " + response.data[0].name_2
-                var admin = response.data[0].admin
-                this.props.hadleSuccessfulAuth(name, admin);
+                this.props.hadleSuccessfulAuth(response.data[0]);
+                this.setState(
+                    {
+                        loggedUser: response.data[0]
+                    })  
             }else{
                 console.log("NOT ALLOWED");
                 this.setState(
