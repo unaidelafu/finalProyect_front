@@ -19,9 +19,9 @@ export default class CustomersForm extends Component {
             status:"ACTIVE",
             error_message:"",
             editMode: false,
-            button: "save"
-            
-        }
+            button: "save"           
+        };
+
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
 
@@ -55,7 +55,7 @@ export default class CustomersForm extends Component {
         var json = JSON.stringify(object);     
         return json;
     }
-    //Create employee
+    //Create customer
     apiPost(){
         //App API
         const formData = this.buildForm();
@@ -88,7 +88,7 @@ export default class CustomersForm extends Component {
             });
             
     }
-    //Update employee
+    //Update customer
     apiPut(){
          //App API
          const formData = this.buildForm();
@@ -119,7 +119,7 @@ export default class CustomersForm extends Component {
                      })                    
              });       
     }
-    //Delete employee
+    //Delete customer
     apiDel(){
           //App API
           var customerEndpoint = this.state.apiUrl + "customer/" + this.state.id
@@ -141,21 +141,26 @@ export default class CustomersForm extends Component {
                         //Wait the response to close            
                         this.modalClose();
                         }   
-              }).catch(error => {
-                      console.log("image error", error);
-                      this.setState({
-                          error_message: resp.data.message
-                      })                    
+              })
+              .catch(error => {
+                console.log("Error from delete", error);
+                this.setState({
+                    error_message: error
+                });                   
               });         
     }
     //Close modal
     modalClose(){
+        
         if (this.state.error_message ===""){
             //no errors. close.
-            this.props.handleSuccessfullFormSubmission(this.state.name_1 + " " + this.state.name_2)
+            this.props.handleSuccessfullFormSubmission();
+            //this.props.handleSuccessfullFormSubmission(this.state.name_1 + " " + this.state.name_2)
         }
+        
     }
     handleSubmit(event){
+        console.log("handlesubmit");
         //check all the fields.
         var fieldsCorrect = this.checkFields(); //Check fields and new password
         //console.log("Edit mode:", this.state.editMode);
@@ -163,10 +168,10 @@ export default class CustomersForm extends Component {
             //console.log("Saving...");
             if(fieldsCorrect === true){   
                 if(this.state.editMode === false){
-                    console.log("New employee");
+                    console.log("New Customer");
                     this.apiPost(); 
                 }else{
-                    console.log("Updating employee");
+                    console.log("Updating Customer");
                     this.apiPut(); 
                 }
             }else{
@@ -181,6 +186,7 @@ export default class CustomersForm extends Component {
               this.apiDel();
             }
         }
+        
         event.preventDefault();
     }
     checkFields(){
@@ -193,12 +199,16 @@ export default class CustomersForm extends Component {
  
     componentDidMount(){
         //this.getJobTypes();
+        //setting state componentDidUpdate will run
+        this.setState({
+            name_1: ""
+        })
     }
 
     componentDidUpdate() {
         //comprueba si hay para editar, si lo hay almacena los valores en un const
-        //console.log("Employees", this.props.employeeToEdit);       
-        if (Object.keys(this.props.employeeToEdit).length > 0) {
+        console.log("Form Customers to edit", this.props.customerToEdit);       
+        if (Object.keys(this.props.customerToEdit).length > 0) {
           const {
             city,
             id,
@@ -208,15 +218,15 @@ export default class CustomersForm extends Component {
             phone_num,
             sid,
             status
-          } = this.props.employeeToEdit;
+          } = this.props.customerToEdit;
 
           this.props.clearCustomerToEdit();    //Limpia los valores que se muestran en form.
           this.setState({   //Completa la pantalla form con los datos.
             city: city,
             id: id,
             mail: mail,
-            name: name_1,
-            surname: name_2,
+            name_1: name_1,
+            name_2: name_2,
             phone_number: phone_num,
             sid: sid,
             status: status,
@@ -227,29 +237,32 @@ export default class CustomersForm extends Component {
       }
 
 
-    handleChange(event){
+    handleChange(event){      
         this.setState({
             [event.target.name]: event.target.value,
             error_message: ""
-        })
+        })        
     }
 
   render() {
     return(
         <form onSubmit={this.handleSubmit} className="customer-form-wrapper">    
             <div className="main-column">
+            <div className="one-column">
+                Customer
+            </div>
                 <div className="two-column">
                     <input
                     type="text"
-                    name="name"
+                    name="name_1"
                     placeholder="Customer Name"
                     value={this.state.name_1}
                     onChange={this.handleChange}
                     />
                     <input
                     type="text"
-                    name="surname"  //identico al state
-                    placeholder="Customer Name 2"
+                    name="name_2"  //identico al state
+                    placeholder="Customer second Name"
                     value={this.state.name_2}
                     onChange={this.handleChange}
                     />                        
@@ -291,7 +304,10 @@ export default class CustomersForm extends Component {
                         {this.state.error_message}
                     </div>
                     <button className="btn" onClick={() => (this.setState({button: "save"}))} type="submit">Save</button>
-                    <button className="btn-del" onClick={() => (this.setState({button: "delete"}))}type="submit">Delete Employee</button>                   
+                    {this.state.editMode === true ?
+                        <button className="btn-del" onClick={() => (this.setState({button: "delete"}))}type="submit">Delete Customer</button>
+                    : null
+                    }                  
                 </div>             
             </div>                    
         </form>

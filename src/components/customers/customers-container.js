@@ -7,31 +7,31 @@ const CustomersContainer = (props) =>{
             if (props.data.length > 0){
                     return(     
                         //header of the jobs 
-                        <div key={"cus" + customersItem.id} className={"customer-list-wrapper-" + customersItem.job_id}>                                                          
-                            <div className="job-header">     
-                                <a className={"customer-item-" + customersItem.job_id} onClick={()=> props.handleEditClick(customersItem)}>
-                                    <div className="text-content">
-                                        <div className="title">{customersItem.name_1 + " " + customersItem.name_2}</div>                        
-                                        <div className="title">{customersItem.phone_num}</div>
-                                        <div className="title">{customersItem.mail}</div>
-                                        <div className="title">{customersItem.city}</div>
-                                        <div className="actions">
-                                            <a className = "action-icon" onClick={()=> props.handleEditClick(portfolioItem)}>
-                                                <FontAwesomeIcon icon="edit" />
-                                            </a>
-                                            <a className = "action-icon" onClick={()=> props.handleDeleteClick(portfolioItem)}>
-                                                <FontAwesomeIcon icon="trash" />
-                                            </a>
-                                        </div>                                        
-                                    </div>
-                                </a> 
+                        <div key={"cus" + customersItem.id} className={"customer-list-wrapper"}>                                                          
+   
+                            <div className={"customer-item"}>
+                                <div className="text-content">
+                                    <div className="title">{customersItem.name_1 + " " + customersItem.name_2}</div>                        
+                                    <div className="title">{customersItem.phone_num}</div>
+                                    <div className="title">{customersItem.mail}</div>
+                                    <div className="title">{customersItem.city}</div>
+                                    <div className="actions">
+                                        <a className = "action-icon" onClick={()=> props.handleEditClick(customersItem)}>
+                                            <FontAwesomeIcon icon="edit" />
+                                        </a>
+                                        <a className = "action-icon" onClick={()=> props.handleDeleteClick(customersItem)}>
+                                            <FontAwesomeIcon icon="trash" />
+                                        </a>
+                                    </div>                                        
+                                </div>
                             </div> 
+
                         </div>
                     )
             }else{
-                <div  key="0" className="employee-item"> No data to show</div>  
+                <div  key="0" className="customer-item"> No data to show</div>  
             }
         });
-        return <div className="employee-list-wrapper">{customersList}</div>;
+        return <div className="customer-list-wrapper">{customersList}</div>;
 };
 export default CustomersContainer;

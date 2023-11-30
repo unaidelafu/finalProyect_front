@@ -31,7 +31,7 @@ export default class EmployeesForm extends Component {
             own_user: true,
             button: "save"
             
-        }
+        };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.componentConfig = this.componentConfig.bind(this);
@@ -216,9 +216,9 @@ export default class EmployeesForm extends Component {
                         this.modalClose();
                         }   
               }).catch(error => {
-                      console.log("image error", error);
+                      console.log("Error from delete", error);
                       this.setState({
-                          error_message: resp.data.message
+                          error_message: error
                       })                    
               });         
     }

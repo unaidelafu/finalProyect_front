@@ -37,6 +37,7 @@ export default class CustomerModal extends Component{
 
     
     render(){
+        //console.log("editing customer: ", this.props.customerToEdit);
         return(
             //<h1>Hi modal</h1>          
             <ReactModal
@@ -45,6 +46,7 @@ export default class CustomerModal extends Component{
                 this.props.handleModalClose();
             }} isOpen={this.props.modalIsOpen}
             >
+                
                 <CustomersForm 
                 handleSuccessfullFormSubmission = {this.handleSuccessfullFormSubmission}
                 customerToEdit = {this.props.customerToEdit}
