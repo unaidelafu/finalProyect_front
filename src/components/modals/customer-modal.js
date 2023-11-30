@@ -1,13 +1,13 @@
 import React, {Component} from "react";
 import ReactModal from 'react-modal';
-import EmployeesForm from "../employees/employees-form";
-//import Home from "../pages/home";
+import CustomersForm from "../customers/customers-form";
 ReactModal.setAppElement(".app-wrapper"); //buscando class, # buscando id   Para que no casque un error de modal
                                             //Es la class que obtiene toda la aplicación, la que se encuentra en el index.
 
-export default class EmployeeModal extends Component{
+export default class CustomerModal extends Component{
     constructor(props) {
         super(props);
+
         //Modal Style
         this.customStyles = {
             content:{
@@ -30,14 +30,13 @@ export default class EmployeeModal extends Component{
         this.handleSuccessfullFormSubmission = this.handleSuccessfullFormSubmission.bind(this);
     }
     
-    handleSuccessfullFormSubmission(newEmployee){
+    handleSuccessfullFormSubmission(newCustomer){
 
-        this.props.handleSuccessfullNewSubmission(newEmployee);
+        this.props.handleSuccessfullNewSubmission(newCustomer);
     }
 
     
     render(){
-        //console.log("Employeessss", this.props.employeeToEdit);
         return(
             //<h1>Hi modal</h1>          
             <ReactModal
@@ -46,11 +45,11 @@ export default class EmployeeModal extends Component{
                 this.props.handleModalClose();
             }} isOpen={this.props.modalIsOpen}
             >
-                <EmployeesForm 
+                <CustomersForm 
                 handleSuccessfullFormSubmission = {this.handleSuccessfullFormSubmission}
-                employeeToEdit = {this.props.employeeToEdit}
-                clearEmployeeToEdit = {this.props.clearEmployeeToEdit}
-                ownUser = {this.props.ownUser}/>             
+                customerToEdit = {this.props.customerToEdit}
+                clearCustomerToEdit = {this.props.clearCustomerToEdit}
+                />             
             </ReactModal>
             
         );

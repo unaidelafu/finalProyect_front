@@ -166,7 +166,7 @@ clearEmployeeToEdit(){
             </Switch>
 
             <div className='app'>
-              <p> <Footer/> </p>
+              <Footer/>
             </div>
           </div>
         </Router>

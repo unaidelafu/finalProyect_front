@@ -1,6 +1,10 @@
 import React, {Component} from "react";
 import axios from "axios";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+
 import { API_url, API_port } from "../constants/global";
+import CustomersContainer from "../customers/customers-container.js"
+import EmployeeModal from "../modals/employee-modal.js";
 
 export default class Customers extends Component {
     constructor(){
@@ -8,14 +12,24 @@ export default class Customers extends Component {
         //instanciar state
         this.state = {
             API_endpoint: API_url + ":" + API_port + "/",
-            blogItems:[],
+            BBDDItems:[],
             totalCount: 0,
             currentPage: 0,
             isLoading: true,
-            blogModalIsOpen: false
+            customerModalIsOpen: false,
+            customerToEdit: {},
+            errorText: ""
         };
-        console.log("Customers start")
+
+        this.handleEditClick = this.handleEditClick.bind(this);
     };
+    handleEditClick(customerItem){
+        //console.log("Clicked: ", employeeItem);
+        this.setState({
+            customerToEdit: customerItem,
+            customerModalIsOpen: true
+        });
+    }   
     get_customers(){
         //axios get
         var getCustomersEndpoint = this.state.API_endpoint + "customers"
@@ -27,22 +41,12 @@ export default class Customers extends Component {
             axiosInstance
             .get(getCustomersEndpoint)
             .then(response => {
-                console.log("Customers!!");
-                /*
-                if(response.data[0].id !== null){                   
-                    var name = response.data[0].name_1 + " " + response.data[0].name_2
-                    var admin = response.data[0].admin
-                    this.props.hadleSuccessfulAuth(name, admin);
-                }else{
-                    console.log("NOT ALLOWED");
-                    this.setState(
-                        {
-                            errorText: 'Wrong User or Password'
-                        })  
-                    this.props.hadleUnsuccessfulAuth();              
-                }
-                */
-                console.log("response", response);
+                console.log("Customers:", response.data);
+                if(Object.keys(response.data).length > 0){
+                    this.setState({
+                        BBDDItems: [...response.data]
+                    })
+                }              
             }).catch(error => {
                 console.log("Some error occurred", error)
                 this.setState(
@@ -59,8 +63,18 @@ export default class Customers extends Component {
       }
     render(){
         return(
-            <div>
-                <h1>Hi customers</h1>
+            <div className="customer-manager-wrapper">                 
+                <div className="new-customer-link">
+                    <div className="actions">
+                        <a className = "action-icon" onClick={this.handleNewEmployeeClick}>
+                            <FontAwesomeIcon icon="fa-solid fa-circle-plus" /></a>
+                    </div>
+                </div>  
+                <CustomersContainer
+                    data={this.state.BBDDItems}   
+                    handleEditClick={this.handleEditClick}     
+                    //handleDeleteClick = {this.handleDeleteClick}
+                    />             
             </div>
         );
     }    

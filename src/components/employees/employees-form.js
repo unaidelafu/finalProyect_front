@@ -46,7 +46,7 @@ export default class EmployeesForm extends Component {
         this.apiPut = this.apiPut.bind(this);
         this.apiDel = this.apiDel.bind(this);
         this.checkNewPass = this.checkNewPass.bind(this);
-        this.modalCLose = this.modalCLose.bind(this);
+        this.modalClose = this.modalClose.bind(this);
 
         this.imgRef = React.createRef();
 
@@ -134,7 +134,7 @@ export default class EmployeesForm extends Component {
         //App API
         const formData = this.buildForm(employee_img_url);
         //console.log("sending data:",formData);
-        var createEmployeeEndpoint = this.state.apiUrl + "employee";
+        var employeeEndpoint = this.state.apiUrl + "employee";
         const axiosInstance = axios.create({
             headers: {
                 "Content-Type": "application/json",
@@ -142,7 +142,7 @@ export default class EmployeesForm extends Component {
             }
             });
             axiosInstance
-            .post(createEmployeeEndpoint,formData)
+            .post(employeeEndpoint,formData)
             .then(resp =>{
                 //console.log("BBDD api response", resp);   
                 if(resp.data.status == "ERROR"){
@@ -151,7 +151,7 @@ export default class EmployeesForm extends Component {
                     })
                 }else{
                     //Wait the response to close            
-                    this.modalCLose();
+                    this.modalClose();
                  }              
 
             }).catch(error => {
@@ -167,7 +167,7 @@ export default class EmployeesForm extends Component {
          //App API
          const formData = this.buildForm(employee_img_url);
          //console.log("sending data EDIT:",formData);
-         var createEmployeeEndpoint = this.state.apiUrl + "employee/" + this.state.id;
+         var employeeEndpoint = this.state.apiUrl + "employee/" + this.state.id;
          const axiosInstance = axios.create({
              headers: {
                  "Content-Type": "application/json",
@@ -175,7 +175,7 @@ export default class EmployeesForm extends Component {
              }
              });
              axiosInstance
-             .put(createEmployeeEndpoint,formData)
+             .put(employeeEndpoint,formData)
              .then(resp =>{
                  console.log("BBDD api response", resp);   
                  if(resp.data.status == "ERROR"){
@@ -184,7 +184,7 @@ export default class EmployeesForm extends Component {
                      })
                  }else{
                     //Wait the response to close            
-                    this.modalCLose();
+                    this.modalClose();
                  }            
              }).catch(error => {
                      console.log("image error", error);
@@ -196,7 +196,7 @@ export default class EmployeesForm extends Component {
     //Delete employee
     apiDel(){
           //App API
-          var createEmployeeEndpoint = this.state.apiUrl + "employee/" + this.state.id
+          var employeeEndpoint = this.state.apiUrl + "employee/" + this.state.id
           const axiosInstance = axios.create({
               headers: {
                   "Content-Type": "application/json",
@@ -204,7 +204,7 @@ export default class EmployeesForm extends Component {
               }
               });
               axiosInstance
-              .delete(createEmployeeEndpoint)
+              .delete(employeeEndpoint)
               .then(resp =>{
                   console.log("BBDD api response", resp);   
                   if(resp.data.status == "ERROR"){
@@ -213,7 +213,7 @@ export default class EmployeesForm extends Component {
                       })
                     }else{
                         //Wait the response to close            
-                        this.modalCLose();
+                        this.modalClose();
                         }   
               }).catch(error => {
                       console.log("image error", error);
@@ -223,7 +223,7 @@ export default class EmployeesForm extends Component {
               });         
     }
     //Close modal
-    modalCLose(){
+    modalClose(){
         if (this.state.error_message ===""){
             //no errors. close.
             this.props.handleSuccessfullFormSubmission(this.state.name + " " + this.state.surname)
@@ -308,7 +308,7 @@ export default class EmployeesForm extends Component {
     }
     checkFields(){
         var fieldsCorrect = true
-        if(this.state.sid.length < 1 || this.state.sid.name < 1 || this.state.sid.surname < 1){
+        if(this.state.sid.length < 1 || this.state.name.length < 1 || this.state.surname.length < 1){
             fieldsCorrect = false;
         }else{
             if(this.state.own_user === true && this.state.new_pass!==""){
@@ -403,7 +403,6 @@ export default class EmployeesForm extends Component {
           } = this.props.employeeToEdit;
 
           this.props.clearEmployeeToEdit();    //Limpia los valores que se muestran en form.
-          console.log("Loaded image:", img_url);
           this.setState({   //Completa la pantalla form con los datos.
             admin: admin,
             id: id,

@@ -1,9 +1,9 @@
 import React, {Component} from "react";
 import axios from "axios";
-import { API_url, API_port } from "../constants/global";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
+
+import { API_url, API_port } from "../constants/global";
 import EmployeesContainer from "../employees/employees-container"
-//import Home from "../pages/home"
 import EmployeeModal from "../modals/employee-modal.js";
 
 export default class Employees extends Component {
@@ -18,7 +18,7 @@ export default class Employees extends Component {
             isLoading: true,
             employeeModalIsOpen: false,
             ownUser: false,
-            employeeToEdit: {},
+            employeeToEdit: {}
             
         };
         this.handleModalClose = this.handleModalClose.bind(this);
@@ -49,11 +49,11 @@ export default class Employees extends Component {
     }
 
     handleEditClick(employeeItem){
-        console.log("Clicked: ", employeeItem)
+        //console.log("Clicked: ", employeeItem);
         this.setState({
             employeeToEdit: employeeItem,
             employeeModalIsOpen: true
-        })
+        });
     }   
     handleNewEmployeeClick(){
         //console.log("CLicked!!")
@@ -68,7 +68,7 @@ export default class Employees extends Component {
     }
     getEmployees(){
         //axios get
-        var getEmployeesEndpoint = this.state.apiUrl + "employees"
+        var getEmployeesEndpoint = this.state.apiUrl + "employees";
         const axiosInstance = axios.create({
             headers: {
                 "Content-Type": "application/json"
@@ -77,31 +77,28 @@ export default class Employees extends Component {
             axiosInstance
             .get(getEmployeesEndpoint)
             .then(response => {
-                //Add the job of the previus person to Print the job on the header of emplyees-container
+                //check the job of the previus person to change the job array of emplyees-container
                 if(Object.keys(response.data).length > 0){
                     //Creando array de arrays de objetos
                     var prevJob = "";
-                    var preparedResponse = []
-                    var data = []
-                    var employeeObj = {}
-                    const iterated = response.data.map(employeeItem =>{
+                    var preparedResponse = [];
+                    var data = [];
+                    response.data.map(employeeItem =>{
                         //preparedResponse.push(employeeItem)
                         if(employeeItem.job != prevJob && prevJob != ""){
                             preparedResponse.push(data);
                             data = [];
                         }
                         data.push(employeeItem);
-                        employeeItem.prevJob = prevJob
-                        prevJob = employeeItem.job
+                        employeeItem.prevJob = prevJob;
+                        prevJob = employeeItem.job;
                     })
                     preparedResponse.push(data)
                 }              
                 this.setState({
                     BBDDItems: [...preparedResponse]
                 })
-                //console.log("BBDD_items:", this.state.BBDDItems);
             }).catch(error => {
-                console.log("Some error occurred", error)
                 this.setState(
                     {
                         errorText: 'An error ocurred' + error
@@ -113,9 +110,8 @@ export default class Employees extends Component {
     iterateJobGroups(){
         var employees = this.state.BBDDItems        
         const EmployeeJobTypes = employees.map(employeesForJob =>{
-            //console.log("Employees for job:", employeesForJob )
             return(
-                <div className="employees-grid-wrapper">
+                <div key={"job" + employeesForJob[0].job_id} className="employees-grid-wrapper">
                     <div className="employee-job">{employeesForJob[0].job + "s"}</div>
                     <EmployeesContainer
                     data={employeesForJob}   
