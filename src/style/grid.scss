@@ -2,9 +2,25 @@
     @include base-grid();
     
     padding-top: 10px;
-    padding-bottom: 10px;
-    
+    padding-bottom: 10px;    
     grid-template-columns: 1fr;
+    .title{
+      font-family: "Titillium Web", sans-serif;
+      //color: $charcoal;
+      text-align: center;
+      color: #74b81a;
+      padding: 5px 0px;
+      width: 100%;
+      border-top: 0px;
+      border-right: 0px;
+      border-left: 0px;
+      //border-top: 1px solid $corp-color;
+      border-bottom: 1px solid $corp-color;
+      background-color: transparent;
+      transition: 0.75s all ease-in-out;
+      font-size: 1.1em;
+      margin-bottom: 21px;     
+    }
   }
   
   .two-column {

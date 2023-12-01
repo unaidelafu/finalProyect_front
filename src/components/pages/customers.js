@@ -4,7 +4,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 import { API_url, API_port } from "../constants/global";
 import CustomersContainer from "../customers/customers-container.js"
-import CustomeModal from "../modals/customer-modal.js";
+import CustomerModal from "../modals/customer-modal.js";
 
 export default class Customers extends Component {
     constructor(){
@@ -12,7 +12,7 @@ export default class Customers extends Component {
         //instanciar state
         this.state = {
             apiUrl: API_url + ":" + API_port + "/",
-            BBDDItems:[],
+            customerList:[],
             totalCount: 0,
             currentPage: 0,
             isLoading: true,
@@ -21,12 +21,14 @@ export default class Customers extends Component {
             errorText: ""
         };
         this.handleSuccessfullNewSubmission = this.handleSuccessfullNewSubmission.bind(this);
+        this.handleSuccessfullEditSubmission = this.handleSuccessfullEditSubmission.bind(this);
+        this.handleSuccessfullDelete = this.handleSuccessfullDelete.bind(this);
         this.handleEditClick = this.handleEditClick.bind(this);
-        this.handleDeleteClick = this.handleDeleteClick.bind(this);
+        //this.handleDeleteClick = this.handleDeleteClick.bind(this);
         this.handleNewCustomerClick = this.handleNewCustomerClick.bind(this);
+        this.handleFindCustomer = this.handleFindCustomer.bind(this);
         this.handleModalClose = this.handleModalClose.bind(this);
         this.clearCustomerToEdit = this.clearCustomerToEdit.bind(this);
-        this.apiDel = this.apiDel.bind(this);
         
     };
 
@@ -41,49 +43,40 @@ export default class Customers extends Component {
             customerModalIsOpen: false
         });     
     }
-    handleSuccessfullNewSubmission(){
+    handleSuccessfullNewSubmission(customer){
         //this.getEmployees();
         //handleSuccessfullNewSubmission(newEmployee){
-        this.setState({
-            customerModalIsOpen: false
-            //---->blogItems: [blog].concat(this.state.blogItems)  //El blog creado, se le concatena los blogs ya existentes, para visualizar todo, el nuevo primero
-        });
+            console.log("New customer:", customer);
+            console.log("Los customers:", this.state.customerList);
         
+        this.setState({
+            customerModalIsOpen: false,
+            customerList: [customer].concat(this.state.customerList)  
+            //El customer creado, se le concatena los customer ya existentes, para visualizar todo, el nuevo primero
+        });
+
+    }
+    handleSuccessfullEditSubmission(customer){
+        console.log("Edited customer:", customer);
+        console.log("Los customers:", this.state.customerList);
+        var oldCustomerList = [...this.state.customerList]
+        var foundIndex = oldCustomerList.findIndex(x => x.id == customer.id); 
+        oldCustomerList[foundIndex] = customer   
+        this.setState({
+            customerModalIsOpen: false,
+            customerList: [...oldCustomerList]
+        });       
+    }
+    handleSuccessfullDelete(customerid){
+        var oldCustomerList = [...this.state.customerList]
+        var foundIndex = oldCustomerList.findIndex(x => x.id == customerid); 
+        oldCustomerList.splice(foundIndex, 1);  //deleting de customer from array
+        this.setState({
+            customerModalIsOpen: false,
+            customerList: [...oldCustomerList]
+        });               
     }
 
-    apiDel(customerItem){
-        //App API
-        var customerEndpoint = this.state.apiUrl + "customer/" + customerItem.id
-        const axiosInstance = axios.create({
-            headers: {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*"
-            }
-            });
-            axiosInstance
-            .delete(customerEndpoint)
-            .then(resp =>{
-                console.log("BBDD api response", resp);   
-                if(resp.data.status == "ERROR"){
-                    this.setState({
-                        errorText: resp.data.message
-                    })
-                  }else{
-                      //Wait the response to close            
-                      this.modalClose();
-                      }   
-            }).catch(error => {
-                    this.setState({
-                        errorText: resp.data.message
-                    })                    
-            });         
-  }
-
-
-    handleDeleteClick(customerItem){
-        //TODO
-        this.apiDel(customerItem);
-    }
     handleEditClick(customerItem){
         console.log("Clicked: ", customerItem);
         this.setState({
@@ -91,6 +84,9 @@ export default class Customers extends Component {
             customerModalIsOpen: true
         });
     }   
+    handleFindCustomer(){
+        console.log("Finding customer");
+    }
     handleNewCustomerClick(){
         console.log("CLicked!!");
         
@@ -113,7 +109,7 @@ export default class Customers extends Component {
                 console.log("Customers:", response.data);
                 if(Object.keys(response.data).length > 0){
                     this.setState({
-                        BBDDItems: [...response.data]
+                        customerList: [...response.data]
                     });
                 }              
             }).catch(error => {
@@ -133,8 +129,10 @@ export default class Customers extends Component {
     render(){
         return(
             <div className="customer-manager-wrapper"> 
-                 <CustomeModal
+                 <CustomerModal
                     handleSuccessfullNewSubmission = {this.handleSuccessfullNewSubmission}
+                    handleSuccessfullEditSubmission = {this.handleSuccessfullEditSubmission}
+                    handleSuccessfullDelete = {this.handleSuccessfullDelete}
                     handleModalClose={this.handleModalClose}            
                     modalIsOpen = {this.state.customerModalIsOpen} 
                     customerToEdit = {this.state.customerToEdit}
@@ -144,11 +142,13 @@ export default class Customers extends Component {
                         <a className = "action-icon" onClick={this.handleNewCustomerClick}>
                             <FontAwesomeIcon icon="fa-solid fa-circle-plus" /></a>
                     </div>
+                    <div className="find-wrapper">
+                        <input placeholder="Find Customer" onChange={this.handleFindCustomer}></input>
+                    </div>
                 </div>  
                 <CustomersContainer
-                    data={this.state.BBDDItems}   
+                    data={this.state.customerList}   
                     handleEditClick={this.handleEditClick}     
-                    handleDeleteClick = {this.handleDeleteClick}
                 />             
             </div>
         );

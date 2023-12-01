@@ -41,16 +41,16 @@
             &:hover{
                 .title{
                     color: $offwhite;
-                    transition: 1s ease-in-out;
+                    transition: 0.75s ease-in-out;
                 }
                 .actions{
                     .action-icon{
                         color: $offwhite;
-                        transition: 1s ease-in-out;
+                        transition: 0.75s ease-in-out;
                     }   
                 }            
                 background-color: $dark-corp-color;
-                transition: 1s ease-in-out;
+                transition: 0.75s ease-in-out;
             }
         }       
     }

@@ -19,9 +19,6 @@ const CustomersContainer = (props) =>{
                                         <a className = "action-icon" onClick={()=> props.handleEditClick(customersItem)}>
                                             <FontAwesomeIcon icon="edit" />
                                         </a>
-                                        <a className = "action-icon" onClick={()=> props.handleDeleteClick(customersItem)}>
-                                            <FontAwesomeIcon icon="trash" />
-                                        </a>
                                     </div>                                        
                                 </div>
                             </div> 

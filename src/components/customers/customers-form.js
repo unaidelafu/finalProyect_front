@@ -76,8 +76,8 @@ export default class CustomersForm extends Component {
                         error_message: resp.data.message
                     })
                 }else{
-                    //Wait the response to close            
-                    this.modalClose();
+                    //Wait the response to close          
+                    this.modalClose("post",resp.data.message[0]);  //We have the customer info in the response
                  }              
 
             }).catch(error => {
@@ -109,8 +109,9 @@ export default class CustomersForm extends Component {
                          error_message: resp.data.message
                      })
                  }else{
-                    //Wait the response to close            
-                    this.modalClose();
+                    //Wait the response to close 
+                    console.log("La respuesta:", resp.data);           
+                    this.modalClose("put", resp.data.message[0]);
                  }            
              }).catch(error => {
                      console.log("image error", error);
@@ -139,7 +140,7 @@ export default class CustomersForm extends Component {
                       })
                     }else{
                         //Wait the response to close            
-                        this.modalClose();
+                        this.modalClose("del",this.state.id);
                         }   
               })
               .catch(error => {
@@ -150,14 +151,18 @@ export default class CustomersForm extends Component {
               });         
     }
     //Close modal
-    modalClose(){
+    modalClose(action, customer){
         
         if (this.state.error_message ===""){
             //no errors. close.
-            this.props.handleSuccessfullFormSubmission();
-            //this.props.handleSuccessfullFormSubmission(this.state.name_1 + " " + this.state.name_2)
-        }
-        
+            if (this.state.editMode === false){
+                this.props.handleSuccessfullFormSubmission(customer);
+            }else if(action === "put"){
+                this.props.handleSuccessfullEditFormSubmission(customer);
+            }else{
+                this.props.handleSuccessfullDeleteFormSubmission(customer); //customer id is sended
+            }           
+        }       
     }
     handleSubmit(event){
         console.log("handlesubmit");
@@ -249,7 +254,7 @@ export default class CustomersForm extends Component {
         <form onSubmit={this.handleSubmit} className="customer-form-wrapper">    
             <div className="main-column">
             <div className="one-column">
-                Customer
+                <div className="title">Customer Form</div>
             </div>
                 <div className="two-column">
                     <input

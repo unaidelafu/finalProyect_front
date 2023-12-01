@@ -439,7 +439,7 @@ export default class EmployeesForm extends Component {
     const jobTypes = this.state.employee_types.map(employeeType =>{ //map returns an array
         return <EmployeeJobTypes key={employeeType.id} employeeJobType={employeeType}/>;
     }); 
-    return(
+    return(        
         <form onSubmit={this.handleSubmit} className="employee-form-wrapper">    
         <div className="left-column">
             <div className="image-uploaders">
@@ -464,87 +464,87 @@ export default class EmployeesForm extends Component {
                 }
             </div>
         </div>   
-            <div className="rigth-column">
+        <div className="rigth-column">
+            <div className="two-column">
+                <input
+                type="text"
+                name="name"
+                placeholder="Employee Name"
+                value={this.state.name}
+                onChange={this.handleChange}
+                />
+                <input
+                type="text"
+                name="surname"  //identico al state
+                placeholder="Employee Surname"
+                value={this.state.surname}
+                onChange={this.handleChange}
+                />                        
+            </div>
+            <div className="two-column">
+                <input
+                type="text"
+                name="sid"
+                placeholder="Identity Doc Num"
+                value={this.state.sid}
+                onChange={this.handleChange}
+                />
+                <select
+                /*{ TODO: /*...this.state.own_user === false ? "disabled" : null }*/
+                name="job"  //identico al state
+                value={this.state.job}
+                onChange={this.handleChange}
+                className="select-element"
+                >
+                    {jobTypes}
+                </select>                        
+            </div>   
+            <div className="two-column">
+                <input
+                type="text"
+                name="mail"
+                placeholder="e-mail"
+                value={this.state.mail}
+                onChange={this.handleChange}
+                />
+                <input
+                type="tel"
+                name="phone_number"  //identico al state
+                placeholder="Phone Number"
+                value={this.state.phone_number}
+                onChange={this.handleChange}
+                />                        
+            </div>  
+            {this.state.own_user === true ?
                 <div className="two-column">
                     <input
                     type="text"
-                    name="name"
-                    placeholder="Employee Name"
-                    value={this.state.name}
+                    name="new_pass"
+                    placeholder="New Password"
+                    value={this.state.new_pass}
                     onChange={this.handleChange}
                     />
                     <input
                     type="text"
-                    name="surname"  //identico al state
-                    placeholder="Employee Surname"
-                    value={this.state.surname}
+                    name="new_pass_repeat"  //identico al state
+                    placeholder="Repeat New Password"
+                    value={this.state.new_pass_repeat}
                     onChange={this.handleChange}
                     />                        
+                </div> : null }
+            
+            <div className="one-column">
+                <div className="error-message-wrapper">
+                    {this.state.error_message}
                 </div>
-                <div className="two-column">
-                    <input
-                    type="text"
-                    name="sid"
-                    placeholder="Identity Doc Num"
-                    value={this.state.sid}
-                    onChange={this.handleChange}
-                    />
-                    <select
-                    /*{ TODO: /*...this.state.own_user === false ? "disabled" : null }*/
-                    name="job"  //identico al state
-                    value={this.state.job}
-                    onChange={this.handleChange}
-                    className="select-element"
-                    >
-                        {jobTypes}
-                    </select>                        
-                </div>   
-                <div className="two-column">
-                    <input
-                    type="text"
-                    name="mail"
-                    placeholder="e-mail"
-                    value={this.state.mail}
-                    onChange={this.handleChange}
-                    />
-                    <input
-                    type="tel"
-                    name="phone_number"  //identico al state
-                    placeholder="Phone Number"
-                    value={this.state.phone_number}
-                    onChange={this.handleChange}
-                    />                        
-                </div>  
-                {this.state.own_user === true ?
-                    <div className="two-column">
-                        <input
-                        type="text"
-                        name="new_pass"
-                        placeholder="New Password"
-                        value={this.state.new_pass}
-                        onChange={this.handleChange}
-                        />
-                        <input
-                        type="text"
-                        name="new_pass_repeat"  //identico al state
-                        placeholder="Repeat New Password"
-                        value={this.state.new_pass_repeat}
-                        onChange={this.handleChange}
-                        />                        
-                    </div> : null }
+                <button className="btn" onClick={() => (this.setState({button: "save"}))} type="submit">Save</button>
+                {this.state.own_user === false && this.state.editMode === true ?
+                    <button className="btn-del" onClick={() => (this.setState({button: "delete"}))}type="submit">Delete Employee</button>
+                : null
+                }
                 
-                <div className="one-column">
-                    <div className="error-message-wrapper">
-                        {this.state.error_message}
-                    </div>
-                    <button className="btn" onClick={() => (this.setState({button: "save"}))} type="submit">Save</button>
-                    {this.state.own_user === false && this.state.editMode === true ?
-                        <button className="btn-del" onClick={() => (this.setState({button: "delete"}))}type="submit">Delete Employee</button>
-                    : null
-                    }
-                    
-                </div>             
-            </div>                    
+            </div>             
+        </div>                    
         </form>
 )
 

@@ -28,13 +28,22 @@ export default class CustomerModal extends Component{
         };
 
         this.handleSuccessfullFormSubmission = this.handleSuccessfullFormSubmission.bind(this);
+        this.handleSuccessfullEditFormSubmission = this.handleSuccessfullEditFormSubmission.bind(this);
+        this.handleSuccessfullDeleteFormSubmission = this.handleSuccessfullDeleteFormSubmission.bind(this);
     }
     
     handleSuccessfullFormSubmission(newCustomer){
 
         this.props.handleSuccessfullNewSubmission(newCustomer);
     }
+    handleSuccessfullEditFormSubmission(editedCustomer){
 
+        this.props.handleSuccessfullEditSubmission(editedCustomer);
+    }
+    handleSuccessfullDeleteFormSubmission(deletedCustomer){
+
+        this.props.handleSuccessfullDelete(deletedCustomer);
+    }    
     
     render(){
         //console.log("editing customer: ", this.props.customerToEdit);
@@ -49,6 +58,8 @@ export default class CustomerModal extends Component{
                 
                 <CustomersForm 
                 handleSuccessfullFormSubmission = {this.handleSuccessfullFormSubmission}
+                handleSuccessfullEditFormSubmission = {this.handleSuccessfullEditFormSubmission} 
+                handleSuccessfullDeleteFormSubmission = {this.handleSuccessfullDeleteFormSubmission}
                 customerToEdit = {this.props.customerToEdit}
                 clearCustomerToEdit = {this.props.clearCustomerToEdit}
                 />             
