@@ -13,12 +13,15 @@ export default class Customers extends Component {
         this.state = {
             apiUrl: API_url + ":" + API_port + "/",
             customerList:[],
+            allCustomers:[],
             totalCount: 0,
             currentPage: 0,
             isLoading: true,
             customerModalIsOpen: false,
             customerToEdit: {},
-            errorText: ""
+            filter: "",
+            errorText: "",
+            nofilter: true
         };
         this.handleSuccessfullNewSubmission = this.handleSuccessfullNewSubmission.bind(this);
         this.handleSuccessfullEditSubmission = this.handleSuccessfullEditSubmission.bind(this);
@@ -29,6 +32,8 @@ export default class Customers extends Component {
         this.handleFindCustomer = this.handleFindCustomer.bind(this);
         this.handleModalClose = this.handleModalClose.bind(this);
         this.clearCustomerToEdit = this.clearCustomerToEdit.bind(this);
+        //this.search_customers = this.search_customers.bind(this);
+        this.handleChange = this.handleChange.bind(this);
         
     };
 
@@ -84,8 +89,49 @@ export default class Customers extends Component {
             customerModalIsOpen: true
         });
     }   
-    handleFindCustomer(){
-        console.log("Finding customer");
+    handleFindCustomer(filterValue){
+        /*
+        let filteredCountries = countries.filter((country) => {
+            return country.name.match(searchInput.toLowerCase());
+         });
+*/
+
+        console.log("Finding customer:", filterValue);
+        /*
+        if(this.state.nofilter === true){
+            this.setState({
+                allCustomers: [...this.state.customerList]
+            })
+        }
+        */
+        console.log("All customers", this.state.allCustomers, this.state.nofilter);
+        let filteredCustomers = [];
+        let filteredCustomers_city = this.state.allCustomers.filter((customer) => {
+            return customer.city.toLowerCase().match(filterValue.toLowerCase());
+        })    
+        let filteredCustomers_name1 = this.state.allCustomers.filter((customer) => {
+            return customer.name_1.toLowerCase().match(filterValue.toLowerCase());
+        })
+        let filteredCustomers_name2 = this.state.allCustomers.filter((customer) => {
+            return customer.name_2.toLowerCase().match(filterValue.toLowerCase());
+        })
+    
+         console.log("Filtered name1:", filteredCustomers_name1);
+         console.log("Filtered name2:", filteredCustomers_name2);
+         console.log("Filtered city", filteredCustomers_city);
+
+         filteredCustomers = [...new Set([...filteredCustomers_city, ...filteredCustomers_name1])];
+         filteredCustomers = [...new Set([...filteredCustomers, ...filteredCustomers_name2])];
+
+
+
+         //filteredCustomers.sort();
+
+         console.log("Filtered", filteredCustomers);
+         this.setState({
+            customerList: filteredCustomers,
+            nofilter: false
+         })
     }
     handleNewCustomerClick(){
         console.log("CLicked!!");
@@ -109,7 +155,8 @@ export default class Customers extends Component {
                 console.log("Customers:", response.data);
                 if(Object.keys(response.data).length > 0){
                     this.setState({
-                        customerList: [...response.data]
+                        customerList: [...response.data],
+                        allCustomers: [...response.data]
                     });
                 }              
             }).catch(error => {
@@ -121,6 +168,15 @@ export default class Customers extends Component {
                 )
                 this.props.hadleUnsuccessfulAuth();
             });        
+    }
+    handleChange(event){      
+        this.setState({
+            [event.target.name]: event.target.value
+            //error_message: ""
+        })        
+        if(event.target.name === "filter"){
+            this.handleFindCustomer(event.target.value);
+        }
     }
 
     componentDidMount(){
@@ -138,12 +194,18 @@ export default class Customers extends Component {
                     customerToEdit = {this.state.customerToEdit}
                     clearCustomerToEdit = {this.clearCustomerToEdit}/>                           
                 <div className="new-customer-link">
+                    <div className="gap"></div>
                     <div className="actions">
                         <a className = "action-icon" onClick={this.handleNewCustomerClick}>
                             <FontAwesomeIcon icon="fa-solid fa-circle-plus" /></a>
                     </div>
                     <div className="find-wrapper">
-                        <input placeholder="Find Customer" onChange={this.handleFindCustomer}></input>
+                        <input
+                        type="text"
+                        name="filter"
+                        placeholder="Find Customer"
+                        value={this.state.filter}
+                        onChange={this.handleChange}></input>
                     </div>
                 </div>  
                 <CustomersContainer
