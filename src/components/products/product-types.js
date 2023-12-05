@@ -1,15 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 
 /*export default function BlogItem(){}*/ //Es lo mismo
-const EmployeeJobTypes = props => {
+const ProductTypes = props => {
     const{
         id, 
-        name,
-        admin
-    } = props.employeeJobType;
+        name
+    } = props.productType;
     return(
             <option value={id}>{name}</option>
     );
 };
-export default EmployeeJobTypes
+export default ProductTypes

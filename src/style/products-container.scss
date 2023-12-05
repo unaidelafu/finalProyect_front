@@ -1,0 +1,66 @@
+.product-manager-wrapper{
+    padding:30px;
+    .product-list-wrapper{
+        //width: 90%;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px,395px));
+        //grid-template-columns: 1fr 1fr 1fr;
+        align-items: start;
+        gap: 10px;
+        padding: 10px;
+
+        .product-item-1{
+            @include product-item($dark-teal);
+            //border: 1px solid blue;
+            &:hover{
+                .title{
+                    color: $offwhite;
+                    transition: 0.75s ease-in-out;
+                }
+                .actions{
+                    .action-icon{
+                        color: $offwhite;
+                        transition: 0.75s ease-in-out;
+                    }   
+                }            
+                background-color: $dark-teal;
+                transition: 0.75s ease-in-out;
+            }
+        }
+        .product-item-2{
+            @include product-item(rgba(202, 60, 60, 0.685));
+            &:hover{
+                .title{
+                    color: $offwhite;
+                    transition: 0.75s ease-in-out;
+                }
+                .actions{
+                    .action-icon{
+                        color: $offwhite;
+                        transition: 0.75s ease-in-out;
+                    }   
+                }
+                background-color: rgba(202, 60, 60, 0.685);
+                transition: 0.75s ease-in-out;
+            }           
+            //border: 1px solid brown;
+        }
+        
+    }
+    .actions{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-gap:15px;
+        
+        .action-icon{
+            justify-self: center;
+            cursor: pointer;
+            color:$corp-color;
+            font-size: 3.5em;
+            transition: 0.5s ease-in-out;
+            &:hover{
+                color: $dark-corp-color;
+            }
+        }
+    }
+}

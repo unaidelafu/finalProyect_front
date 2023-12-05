@@ -46,17 +46,16 @@
     }
   }
 
-  @mixin base-grid() {
-    display: grid;
-    grid-gap: 21px;
-  }
+@mixin base-grid() {
+display: grid;
+grid-gap: 21px;
+}
 
-  @mixin error-message(){
-    color: $warning
-  }
+@mixin error-message(){
+color: $warning
+}
 
-  @mixin employee-item($color){
-
+@mixin employee-item($color){
     display: grid;
     grid-template-columns: 1fr 3fr;
     border: 1px solid $color;
@@ -103,6 +102,61 @@
     }
 
 }
+@mixin product-item($color){
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    border: 1px solid $color;
+    border-radius: 8px;
+    padding: 20px;   
+    cursor: pointer;    
+    //display: flex;
+    //flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    //min-width: 150px;
+    .product-img img{
+        width: 100px;
+        height: 120px;
+        object-fit: cover;
+    }    
+    .product-img-background{
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 350px;
+        width: 100%;
+    }          
+    .text-content{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        //min-width: 150px;
+
+        .title{
+            color: $charcoal;
+            font-size: 1.5em;
+            text-align: center;
+        }
+        .actions{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap:15px;
+            
+            .action-icon{
+                cursor: pointer;
+                color:$charcoal;
+                font-size: 1.5em;
+                transition: 0.5s ease-in-out;
+                &:hover{
+                    color: $warning;
+                }
+            }
+        }
+    }
+
+}
+
 
 @mixin customer-item($color){
 
