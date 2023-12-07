@@ -17,6 +17,7 @@ import Home from "./pages/home";
 import Customers from "./pages/customers";
 import Employees from "./pages/employees";
 import Inventory from "./pages/inventory";
+import InventoryDetail from "./pages/inventory-detail";
 import Footer from './footer/footer';
 import NoMatch from "./pages/no-match";
 
@@ -160,6 +161,7 @@ clearEmployeeToEdit(){
               <Route exact path="/customers" component = {Customers} />
               <Route exact path="/employees" component = {Employees} />
               <Route exact path="/inventory" component = {Inventory} />
+              <Route path="/inv/:slug" component = {InventoryDetail} />
               <Route exact path="/home" component = {Home} />
               {/*this.state.loggedInStatus === "LOGGED_IN" ? this.authorizedPages(): null*/}
               <Route component = {NoMatch} /*Siempre al final, porque las pages funcionan como if else*//>        

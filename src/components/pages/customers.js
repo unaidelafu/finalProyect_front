@@ -49,7 +49,6 @@ export default class Customers extends Component {
         });     
     }
     handleSuccessfullNewSubmission(customer){
-        //this.getEmployees();
         //handleSuccessfullNewSubmission(newEmployee){
             console.log("New customer:", customer);
             console.log("Los customers:", this.state.customerList);

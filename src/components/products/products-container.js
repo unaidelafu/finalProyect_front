@@ -1,4 +1,5 @@
 import React, { Component }  from "react";
+import { Link } from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 
 const ProductsContainer = (props) =>{
@@ -7,14 +8,12 @@ const ProductsContainer = (props) =>{
     const productsList = props.data.map(productItem =>{
             if (props.data.length > 0){
                     return( 
-                        <div key={"prod" + productItem.id} className={"product-list-wrapper-" + productItem.b_type_id}>
-                            <div className="type-header">    
-                            <a className={"product-item-" + productItem.b_type_id} onClick={()=> props.handleEditClick(productItem)}>
-                                    <div className={"product-img-background"}
-                                    style={{
-                                        backgroundImage: "url(" + productItem.img_url + ")"
-                                    }}
-                                    />
+                        <div key={"prod" + productItem.mp_id} className={"product-item-wrapper"}> 
+                            <Link to={`/inv/${productItem.mp_id}`}>
+                                    <div className={"product-img-background"}>
+                                        <img src={productItem.img_url}/>
+                                    </div>
+                                    
                                     <div className="img-text-wrapper">
                                         <div className="logo-wrapper">
                                             {productItem.name}
@@ -24,8 +23,7 @@ const ProductsContainer = (props) =>{
                                             <div>{productItem.description}</div>
                                         </div>
                                     </div>                                                  
-                                </a>                       
-                            </div>  
+                                </Link>                       
                         </div>   
                     )
                     i++;
@@ -38,21 +36,19 @@ const ProductsContainer = (props) =>{
 export default ProductsContainer;
 
 /*
-                    return(     
-                        //header of the jobs 
-                        <div key={"prod" + productItem.id} className={"product-list-wrapper-" + productItem.b_type_id}>                                                          
-                            <div className="type-header">     
-                                <a className={"product-item-" + productItem.b_type_id} onClick={()=> props.handleEditClick(productItem)}>
-                                    <div className="product-img">
+                            <a className={"product-item"} onClick={()=>props.handleEditClick(productItem)}>
+                                    <div className={"product-img-background"}>
                                         <img src={productItem.img_url}/>
                                     </div>
-                                    <div className="text-content">
-                                        <div className="title">{productItem.code}</div>                        
-                                        <div className="title">{productItem.name}</div>
-                                        <div className="title">{productItem.description}</div>
-                                    </div>
-                                </a> 
-                            </div> 
-                        </div>
-                    )
+                                    
+                                    <div className="img-text-wrapper">
+                                        <div className="logo-wrapper">
+                                            {productItem.name}
+                                        </div>
+                                        <div className="subtitle">
+                                            <div>{productItem.code}</div>
+                                            <div>{productItem.description}</div>
+                                        </div>
+                                    </div>                                                  
+                                </a>  
 */

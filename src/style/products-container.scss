@@ -9,9 +9,11 @@
         gap: 10px;
         padding: 10px;
 
-        .product-item-1{
+        .product-item-wrapper{
+
             @include product-item($dark-teal);
             //border: 1px solid blue;
+            /*
             &:hover{
                 .title{
                     color: $offwhite;
@@ -26,6 +28,7 @@
                 background-color: $dark-teal;
                 transition: 0.75s ease-in-out;
             }
+            */
         }
         .product-item-2{
             @include product-item(rgba(202, 60, 60, 0.685));

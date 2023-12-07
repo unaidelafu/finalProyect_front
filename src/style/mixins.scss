@@ -103,6 +103,89 @@ color: $warning
 
 }
 @mixin product-item($color){
+
+    position: relative;
+    //display:flex;
+    //flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+    padding-left: 100px;
+    padding-right: 100px;
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 2%;
+    .product-img-background img{
+        width: 100px;
+        height: 120px;
+        object-fit: cover;
+    }   
+    /* 
+    .product-img-background{
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        //background-size: auto;
+        height: 350px;
+        width: 100%;
+    }
+    */
+    .img-text-wrapper{
+        /*
+        position: absolute;
+        top: 0;
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        text-align: center;
+        padding-left: 100px;
+        padding-right: 100px;
+        */
+        .subtitle {
+            transition: 1s ease-in-out;
+            color: transparent;
+        }
+
+        .logo-wrapper img{
+            width: 50%;
+            margin-bottom: 20px;
+        }            
+    }
+    
+    .img-text-wrapper:hover .subtitle{
+        color: $teal;
+        font-weight: 400;
+    }
+    /*
+    .img-text-wrapper:hover .product-img-background{
+        transition: 1s;
+        filter: brightness(10%)
+    }*/
+    .img-text-wrapper:hover + .product-img-background {
+        transition: 1s;
+        filter: brightness(10%)
+    }
+    .image-blur{
+        transition: 1s;
+        filter: brightness(10%)
+    }
+
+
+
+
+
+
+
+
+
+
+    /*
+    //------
     display: grid;
     grid-template-columns: 1fr 3fr;
     border: 1px solid $color;
@@ -138,23 +221,8 @@ color: $warning
             font-size: 1.5em;
             text-align: center;
         }
-        .actions{
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-gap:15px;
-            
-            .action-icon{
-                cursor: pointer;
-                color:$charcoal;
-                font-size: 1.5em;
-                transition: 0.5s ease-in-out;
-                &:hover{
-                    color: $warning;
-                }
-            }
-        }
     }
-
+    */
 }
 
 

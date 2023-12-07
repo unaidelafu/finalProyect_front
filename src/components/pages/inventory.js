@@ -64,7 +64,7 @@ export default class Inventory extends Component {
 
     get_products(){
         //axios get
-        var getProductsEndpoint = this.state.apiUrl + "products"
+        var getProductsEndpoint = this.state.apiUrl + "master-products"
         const axiosInstance = axios.create({
             headers: {
                 "Content-Type": "application/json"

@@ -19,6 +19,7 @@ export default class ProductsForm extends Component {
             code: "",
             name: "",           
             description: "",
+            b_id: 0,
             b_name: "",
             b_type: "",
             b_type_id: 0,
@@ -97,7 +98,8 @@ export default class ProductsForm extends Component {
         formData.append("code", this.state.code);
         formData.append("name", this.state.name);
         formData.append("description", this.state.description);
-        formData.append("b_name", this.state.description);
+        formData.append("b_id", this.state.b_id);
+        formData.append("b_name", this.state.b_name);
         formData.append("b_type", this.state.b_type);
         formData.append("b_type_id", this.state.b_type_id);
 
