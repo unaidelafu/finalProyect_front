@@ -169,25 +169,14 @@ export default class Inventory extends Component {
                   }else{
                         //Wait the response to close       
                         var foundIndex = 0;
-                        var updatedProductList = [];     
-                        console.log("state products:", this.state.productList);
-                        var oldProductFirstList = [...this.state.productList[0]];
-                        var oldProductSecondList = [...this.state.productList[1]];
-
-                        console.log("old products1:", oldProductFirstList);    
-                        console.log("old products2:", oldProductSecondList);    
-                        foundIndex = oldProductFirstList.findIndex(x => x.mp_id == product.mp_id); 
-                        oldProductFirstList.splice(foundIndex, 1);  //deleting de customer from array
-
-                        if(foundIndex < 1){
-                            foundIndex = oldProductSecondList.findIndex(x => x.mp_id == product.mp_id);
-                            oldProductSecondList.splice(foundIndex, 1);  //deleting de customer from array
-                        }
-
-                        updatedProductList[0] = [...oldProductFirstList];
-                        updatedProductList[1] = [...oldProductSecondList];
+                        var updatedProductList = [...this.state.productList];     
                         
-                        console.log("Deleted array: ", updatedProductList);
+                        updatedProductList.forEach((productsByType) => {
+                            console.log(productsByType);
+                            foundIndex = productsByType.findIndex(x => x.mp_id == product.mp_id); 
+                            productsByType.splice(foundIndex, 1);  //deleting de customer from array                           
+                        });
+
                         this.setState({
                             productList: [...updatedProductList]
                         });   
@@ -211,68 +200,33 @@ export default class Inventory extends Component {
     }
     handleFind(filterValue){
         
-        console.log("Finding:", filterValue);
-
-        console.log("All master products", this.state.allProducts, this.state.nofilter);
         let finalFilter = [];
-        //TODO: CONVERT TO ITERABLE ARRAY
         if (filterValue !=""){
-            let allProductsFirstList = [...this.state.allProducts[0]];
-            let allProductsSecondList = [...this.state.allProducts[1]];
-            let filteredProductsFirst = [];
-            let filteredProductsSecond = [];
-            //First list find:
-            //code, name, b_name
-            let filteredProductFirstList_code = allProductsFirstList.filter((product) => {
-                return product.code.toLowerCase().match(filterValue.toLowerCase());
-            });    
-            let filteredProductFirstList_name = allProductsFirstList.filter((product) => {
-                return product.name.toLowerCase().match(filterValue.toLowerCase());
-            });
-            let filteredProductFirstList_brand = allProductsFirstList.filter((product) => {
-                return product.b_name.toLowerCase().match(filterValue.toLowerCase());
-            });   
-             console.log("Filtered name:", filteredProductFirstList_name);
-             console.log("Filtered brande:", filteredProductFirstList_brand);
-             console.log("Filtered code", filteredProductFirstList_code);
-    
-             filteredProductsFirst = [...new Set([...filteredProductFirstList_code, ...filteredProductFirstList_name])];
-             filteredProductsFirst = [...new Set([...filteredProductsFirst, ...filteredProductFirstList_brand])];
-    
-            //Second list find:
-            //code, name, b_name
-            let filteredProductSecondList_code = allProductsSecondList.filter((product) => {
-                return product.code.toLowerCase().match(filterValue.toLowerCase());
-            });    
-            let filteredProductSecondList_name = allProductsSecondList.filter((product) => {
-                return product.name.toLowerCase().match(filterValue.toLowerCase());
-            });
-            let filteredProductSecondList_brand = allProductsSecondList.filter((product) => {
-                return product.b_name.toLowerCase().match(filterValue.toLowerCase());
-            });   
-             console.log("Filtered name:", filteredProductSecondList_name);
-             console.log("Filtered brand:", filteredProductSecondList_brand);
-             console.log("Filtered code", filteredProductSecondList_code);
-    
-             filteredProductsSecond = [...new Set([...filteredProductSecondList_code, ...filteredProductSecondList_name])];
-             filteredProductsSecond = [...new Set([...filteredProductsSecond, ...filteredProductSecondList_brand])];
-    
-             //filteredCustomers.sort();
+            let filteredProducts = [];
             var i = 0;
-            if(filteredProductsFirst.length > 0){
-                finalFilter[i] = [...filteredProductsFirst];
-                i++;
-            }
-            if(filteredProductsSecond.length > 0){
-                finalFilter[i] = [...filteredProductsSecond];
-            }
+            this.state.allProducts.forEach((allProductsByType) =>{
+                console.log("product by type",allProductsByType);
+
+                let filteredProductList_code = allProductsByType.filter((product) => {
+                    return product.code.toLowerCase().match(filterValue.toLowerCase());
+                });    
+                let filteredProductList_name = allProductsByType.filter((product) => {
+                    return product.name.toLowerCase().match(filterValue.toLowerCase());
+                });
+                let filteredProducList_brand = allProductsByType.filter((product) => {
+                    return product.b_name.toLowerCase().match(filterValue.toLowerCase());
+                }); 
+                filteredProducts = [...new Set([...filteredProductList_code, ...filteredProductList_name])];
+                filteredProducts = [...new Set([...filteredProducts, ...filteredProducList_brand])]; 
+                
+                if(filteredProducts.length > 0){
+                    finalFilter[i] = [...filteredProducts];
+                    i++;
+                }           
+            });
         }else{
             finalFilter = [...this.state.allProducts];
         }
-
-
-
-         console.log("Filtered final", finalFilter);
 
          this.setState({
             productList: finalFilter,
