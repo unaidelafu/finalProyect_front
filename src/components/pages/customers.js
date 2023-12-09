@@ -29,7 +29,7 @@ export default class Customers extends Component {
         this.handleEditClick = this.handleEditClick.bind(this);
         //this.handleDeleteClick = this.handleDeleteClick.bind(this);
         this.handleNewCustomerClick = this.handleNewCustomerClick.bind(this);
-        this.handleFindCustomer = this.handleFindCustomer.bind(this);
+        this.handleFind = this.handleFind.bind(this);
         this.handleModalClose = this.handleModalClose.bind(this);
         this.clearCustomerToEdit = this.clearCustomerToEdit.bind(this);
         //this.search_customers = this.search_customers.bind(this);
@@ -88,22 +88,12 @@ export default class Customers extends Component {
             customerModalIsOpen: true
         });
     }   
-    handleFindCustomer(filterValue){
-        /*
-        let filteredCountries = countries.filter((country) => {
-            return country.name.match(searchInput.toLowerCase());
-         });
-*/
+    handleFind(filterValue){
 
         console.log("Finding customer:", filterValue);
-        /*
-        if(this.state.nofilter === true){
-            this.setState({
-                allCustomers: [...this.state.customerList]
-            })
-        }
-        */
+
         console.log("All customers", this.state.allCustomers, this.state.nofilter);
+        
         let filteredCustomers = [];
         let filteredCustomers_city = this.state.allCustomers.filter((customer) => {
             return customer.city.toLowerCase().match(filterValue.toLowerCase());
@@ -174,7 +164,7 @@ export default class Customers extends Component {
             //error_message: ""
         })        
         if(event.target.name === "filter"){
-            this.handleFindCustomer(event.target.value);
+            this.handleFind(event.target.value);
         }
     }
 

@@ -6,7 +6,7 @@ const ProductTypes = props => {
     const{
         id, 
         name
-    } = props.productType;
+    } = props.productTypes;
     return(
             <option value={id}>{name}</option>
     );

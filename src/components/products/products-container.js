@@ -23,7 +23,15 @@ const ProductsContainer = (props) =>{
                                             <div>{productItem.description}</div>
                                         </div>
                                     </div>                                                  
-                                </Link>                       
+                                </Link>  
+                                <div className="actions">
+                                    <a className = "action-icon" onClick={()=> props.handleEditClick(productItem)}>
+                                        <FontAwesomeIcon icon="edit" />
+                                    </a>
+                                    <a className = "action-icon" onClick={()=> props.handleDeleteClick(productItem)}>
+                                        <FontAwesomeIcon icon="trash" />
+                                    </a>                            
+                                </div>                      
                         </div>   
                     )
                     i++;

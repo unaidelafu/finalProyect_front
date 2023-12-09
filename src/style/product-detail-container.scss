@@ -1,0 +1,72 @@
+.product-detail-manager-wrapper{
+    padding:30px;
+    .product-detail-list-wrapper{
+        //width: 90%;
+        display: grid;
+        //grid-template-columns: 1fr 1fr 1fr;
+        align-items: start;
+        //gap: 10px;
+        padding: 5px;
+        /*
+        .empty-field{
+            //width: 200px;    display: flex;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            grid-column: 1 / max;            
+        }
+        */
+        /*
+        @media (max-width: 1200px) {
+            .empty-field {
+                //grid-template-columns: 1fr 1fr;
+                grid-column: 2 / 1;  
+            }
+        }
+        @media (max-width: 600px) {
+            .empty-field {
+                //grid-template-columns: 1fr;
+                grid-column: 1 / 1;  
+            }
+        }
+        */
+        .product-detail-item{
+            display: grid;
+            @include customer-item($corp-color);
+            //grid-template-columns: 1fr 1fr 1fr 1fr 0.5fr;
+            
+            //border: 1px solid blue;
+            &:hover{
+                .title{
+                    color: $offwhite;
+                    transition: 0.75s ease-in-out;
+                }
+                .actions{
+                    .action-icon{
+                        color: $offwhite;
+                        transition: 0.75s ease-in-out;
+                    }   
+                }            
+                background-color: $dark-corp-color;
+                transition: 0.75s ease-in-out;
+            }
+        }       
+    }
+    .actions{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-gap:15px;
+        
+        .action-icon{
+            justify-self: center;
+            cursor: pointer;
+            color:$corp-color;
+            font-size: 3.5em;
+            transition: 0.5s ease-in-out;
+            &:hover{
+                color: $dark-corp-color;
+            }
+        }
+    }
+}

@@ -15,14 +15,15 @@ export default class ProductsForm extends Component {
         this.state = {
             apiUrl: API_url + ":" + API_port + "/",
             product_types:[],
+            product_brands:[],
             id: 0,
             code: "",
             name: "",           
             description: "",
-            b_id: 0,
-            b_name: "",
-            b_type: "",
-            b_type_id: 0,
+            b_id: 20,
+            b_name: "BH",
+            b_type: "Bikes",
+            b_type_id: 2,
             product_img_url:"",
             product_img_url_prev:"",                        
             price: "",
@@ -42,7 +43,7 @@ export default class ProductsForm extends Component {
         this.checkFields = this.checkFields.bind(this);
         this.buildForm = this.buildForm.bind(this);
         this.apiPost = this.apiPost.bind(this);
-        //this.apiPut = this.apiPut.bind(this);
+        this.apiPut = this.apiPut.bind(this);
         //this.apiDel = this.apiDel.bind(this);
         this.modalClose = this.modalClose.bind(this);
         this.imgRef = React.createRef();
@@ -78,19 +79,6 @@ export default class ProductsForm extends Component {
         }
     }
 
-/*
-            id: 0,
-            code: "",
-            name: "",
-            b_name: "",
-            description: "",
-            b_type: "",
-            b_type_id: 0,
-            product_img_url:"",
-            product_img_url_prev:"",                        
-            price: "",
-            size: "",
-*/
 
     buildForm(product_img_url){
         var object = {};
@@ -102,21 +90,18 @@ export default class ProductsForm extends Component {
         formData.append("b_name", this.state.b_name);
         formData.append("b_type", this.state.b_type);
         formData.append("b_type_id", this.state.b_type_id);
+        
 
         if(this.state.product_img_url){
             formData.append("img_url", this.state.product_img_url);   
         }else{
             formData.append("img_url", product_img_url);  //parse
-        }          
-        if(this.state.size){          
-            formData.append("size", ""); 
-        }else{           
-            formData.append("size", this.state.size); 
-        }         
+        }       
+
         if(this.state.price){
-            formData.append("price", "0"); 
-        }else{           
             formData.append("price", this.state.price); 
+        }else{           
+            formData.append("price", "0"); 
         }  
 
         //convert to json
@@ -127,13 +112,12 @@ export default class ProductsForm extends Component {
         return json;
     }
 
-    //TODO: Nos hemos quedado aqui:
     //Create product
     apiPost(product_img_url){
         //App API
         const formData = this.buildForm(product_img_url);
         //console.log("sending data:",formData);
-        var productEndpoint = this.state.apiUrl + "product";
+        var productEndpoint = this.state.apiUrl + "master-product";
         const axiosInstance = axios.create({
             headers: {
                 "Content-Type": "application/json",
@@ -143,20 +127,21 @@ export default class ProductsForm extends Component {
             axiosInstance
             .post(productEndpoint,formData)
             .then(resp =>{
-                //console.log("BBDD api response", resp);   
+                console.log("BBDD api response", resp.data.status);   
                 if(resp.data.status == "ERROR"){
+                    console.log("error");   
                     this.setState({
                         error_message: resp.data.message
                     })
-                }else{
+                }else{  
                     //Wait the response to close            
                     this.modalClose();
                  }              
 
             }).catch(error => {
-                    //console.log("image error", error);
+                    console.log("image error", error);
                     this.setState({
-                        error_message: resp.data.message
+                        error_message: error
                     })                    
             });
             
@@ -166,7 +151,7 @@ export default class ProductsForm extends Component {
          //App API
          const formData = this.buildForm(product_img_url);
          //console.log("sending data EDIT:",formData);
-         var productEndpoint = this.state.apiUrl + "product/" + this.state.id;
+         var productEndpoint = this.state.apiUrl + "master-product/" + this.state.mp_id;
          const axiosInstance = axios.create({
              headers: {
                  "Content-Type": "application/json",
@@ -175,11 +160,11 @@ export default class ProductsForm extends Component {
              });
              axiosInstance
              .put(productEndpoint,formData)
-             .then(resp =>{
-                 console.log("BBDD api response", resp);   
-                 if(resp.data.status == "ERROR"){
+             .then(respi =>{
+                 console.log("BBDD api response", respi);   
+                 if(respi.data.status == "ERROR"){
                      this.setState({
-                         error_message: resp.data.message
+                         error_message: respi.data.message
                      })
                  }else{
                     //Wait the response to close            
@@ -188,7 +173,7 @@ export default class ProductsForm extends Component {
              }).catch(error => {
                      console.log("image error", error);
                      this.setState({
-                         error_message: resp.data.message
+                         error_message: error
                      })                    
              });       
     }
@@ -196,7 +181,7 @@ export default class ProductsForm extends Component {
     /*
     apiDel(){
           //App API
-          var employeeEndpoint = this.state.apiUrl + "employee/" + this.state.id
+          var employeeEndpoint = this.state.apiUrl + "master-product/" + this.state.mp_id
           const axiosInstance = axios.create({
               headers: {
                   "Content-Type": "application/json",
@@ -227,7 +212,7 @@ export default class ProductsForm extends Component {
     modalClose(){
         if (this.state.error_message ===""){
             //no errors. close.
-            this.props.handleSuccessfullFormSubmission(this.state.name + " " + this.state.surname)
+            this.props.handleSuccessfullFormSubmission()
         }
     }
     handleSubmit(event){
@@ -239,7 +224,7 @@ export default class ProductsForm extends Component {
             if(fieldsCorrect === true){
                 var image_url = "";   
                 if(this.state.product_img || 
-                    this.state.product_img_url_prev != this.state.product_img_url){
+                    (this.state.product_img && this.state.editMode === true && this.state.product_img_url_prev != this.state.product_img_url)){
                     //console.log("image", this.state.product_img)
                     //Image API
                     var file = this.state.product_img;
@@ -269,7 +254,7 @@ export default class ProductsForm extends Component {
                     }).catch(error => {
                             //console.log("image error", error);
                             this.setState({
-                                error_message: resp.data.message
+                                error_message: error
                             })
                     });
                 }else{
@@ -299,7 +284,7 @@ export default class ProductsForm extends Component {
             }            
         }else{
             
-            const answer = window.confirm("Deleting Employee, are you sure?");
+            const answer = window.confirm("Deleting master product, are you sure?");
             if (answer) {
               //console.log("Deleting...");
               //this.apiDel();
@@ -309,7 +294,7 @@ export default class ProductsForm extends Component {
     }
     checkFields(){
         var fieldsCorrect = true
-        if(this.state.sid.length < 1 || this.state.name.length < 1 || this.state.surname.length < 1){
+        if(this.state.code.length < 1 || this.state.name.length < 1){
             fieldsCorrect = false;
         }
         return fieldsCorrect
@@ -350,7 +335,7 @@ export default class ProductsForm extends Component {
 
     getProductTypes(){
         //axios get
-        var getProductsEndpoint = this.state.apiUrl + "brand_types"
+        var getProductsEndpoint = this.state.apiUrl + "brand-types"
         const axiosInstance = axios.create({
             headers: {
                 "Content-Type": "application/json"
@@ -374,50 +359,76 @@ export default class ProductsForm extends Component {
                 this.props.hadleUnsuccessfulAuth();
             });  
     }
+    getBrands(){
+         //axios get
+         var getProductsEndpoint = this.state.apiUrl + "brands"
+         const axiosInstance = axios.create({
+             headers: {
+                 "Content-Type": "application/json"
+             }
+             });
+             axiosInstance
+             .get(getProductsEndpoint)
+             .then(response => {
+                 //Add the job of the previus person to Print the job on the header of emplyees-container      
+                 this.setState({
+                    product_brands: [...response.data]
+                 })
+                 console.log("Product types:", this.state.product_types);
+             }).catch(error => {
+                 console.log("Some error occurred", error)
+                 this.setState(
+                     {
+                         errorText: 'Error ocurred:' + error
+                     }
+                 )
+                 this.props.hadleUnsuccessfulAuth();
+             });        
+    }
     componentDidMount(){
         this.getProductTypes();
+        this.getBrands();
     }
 
     componentDidUpdate() {
         //comprueba si hay para editar, si lo hay almacena los valores en un const
         //console.log("Employees", this.props.productToEdit);
-        
+        console.log("Product to edit:", this.props.productToEdit);
         if (Object.keys(this.props.productToEdit).length > 0) {
           const {
-            admin,
-            id,
+            b_id,
+            b_name,
+            b_type,
+            b_type_id,
+            code,
             img_url,
-            job,
-            job_id,
-            mail,
-            name_1,
-            name_2,
-            phone_num,
-            pswrd,
-            sid,
-            status,
-            prevJob
+            mp_id,
+            name,
+            price,
+            description,
+            id,
+            size
           } = this.props.productToEdit;
 
-          this.props.clearEmployeeToEdit();    //Limpia los valores que se muestran en form.
+          this.props.clearProductToEdit();    //Limpia los valores que se muestran en form.
+          console.log("b_id de props", this.props.productToEdit.b_id);         
+          console.log("b_id:", b_id); 
           this.setState({   //Completa la pantalla form con los datos.
-            admin: admin,
-            id: id,
+            b_id: b_id,
+            b_name: b_name,
+            b_type: b_type,
+            b_type_id: b_type_id,
+            code: code,
             product_img_url: img_url,
-            product_img_url_prev: img_url, //saves de previus img to check it changes
-            job: job_id,
-            job_id: job_id,
-            mail: mail,
-            name: name_1,
-            surname: name_2,
-            phone_number: phone_num,
-            user_pass: pswrd,
-            sid: sid,
-            status: status,
-            editMode: true,
-            new_pass: "",
-            new_pass_repeat: "",
-            own_user: this.props.ownUser
+            product_img_url_prev: img_url,
+            mp_id: mp_id,
+            name: name,
+            price: price,
+            description: description,
+            id: id,
+            size: size,
+            editMode: true
+
             //---
           })
         }
@@ -434,8 +445,12 @@ export default class ProductsForm extends Component {
 
   render() {
     const productTypes = this.state.product_types.map(productType =>{ //map returns an array
-        return <ProductTypes key={productType.id} productType={productType}/>;
+        return <ProductTypes key={productType.id} productTypes={productType}/>;
     }); 
+    
+    const productBrands = this.state.product_brands.map(productBrand =>{ //map returns an array
+        return <ProductBrands key={productBrand.id} productBrands={productBrand}/>;
+    });     
     return(        
         <form onSubmit={this.handleSubmit} className="product-form-wrapper">    
         <div className="left-column">
@@ -456,7 +471,7 @@ export default class ProductsForm extends Component {
                     djsConfig={this.djsConfig()}
                     eventHandlers={this.handleImgDrop()}
                     >
-                        <div className="dz-message">Employee Image</div>  {/* Child component por defecto de la class dropzonecomponent */}
+                        <div className="dz-message">mp Image</div>  {/* Child component por defecto de la class dropzonecomponent */}
                     </DropzoneComponent>)
                 }
             </div>
@@ -465,31 +480,31 @@ export default class ProductsForm extends Component {
             <div className="two-column">
                 <input
                 type="text"
+                name="code"
+                placeholder="mp Code"
+                value={this.state.code}
+                onChange={this.handleChange}
+                />
+                <input
+                type="text"
                 name="name"
-                placeholder="Employee Name"
+                placeholder="mp Name"
                 value={this.state.name}
                 onChange={this.handleChange}
-                />
-                <input
-                type="text"
-                name="surname"  //identico al state
-                placeholder="Employee Surname"
-                value={this.state.surname}
-                onChange={this.handleChange}
-                />                        
+                />                      
             </div>
             <div className="two-column">
-                <input
-                type="text"
-                name="sid"
-                placeholder="Identity Doc Num"
-                value={this.state.sid}
-                onChange={this.handleChange}
-                />
                 <select
-                /*{ TODO: /*...this.state.own_user === false ? "disabled" : null }*/
-                name="job"  //identico al state
-                value={this.state.job}
+                name="b_id"  //identico al state
+                value={this.state.b_id}
+                onChange={this.handleChange}
+                className="select-element"
+                >
+                    {productBrands}
+                </select>  
+                <select
+                name="b_type_id"  //identico al state
+                value={this.state.b_type_id}
                 onChange={this.handleChange}
                 className="select-element"
                 >
@@ -499,37 +514,12 @@ export default class ProductsForm extends Component {
             <div className="two-column">
                 <input
                 type="text"
-                name="mail"
-                placeholder="e-mail"
-                value={this.state.mail}
+                name="price"
+                placeholder="mp Price €"
+                value={this.state.price}
                 onChange={this.handleChange}
                 />
-                <input
-                type="tel"
-                name="phone_number"  //identico al state
-                placeholder="Phone Number"
-                value={this.state.phone_number}
-                onChange={this.handleChange}
-                />                        
-            </div>  
-            {this.state.own_user === true ?
-                <div className="two-column">
-                    <input
-                    type="text"
-                    name="new_pass"
-                    placeholder="New Password"
-                    value={this.state.new_pass}
-                    onChange={this.handleChange}
-                    />
-                    <input
-                    type="text"
-                    name="new_pass_repeat"  //identico al state
-                    placeholder="Repeat New Password"
-                    value={this.state.new_pass_repeat}
-                    onChange={this.handleChange}
-                    />                        
-                </div> : null }
-            
+            </div>             
             <div className="one-column">
                 <div className="error-message-wrapper">
                     {this.state.error_message}
