@@ -26,7 +26,7 @@ export default class EmployeesForm extends Component {
             employee_img_url_prev:"",
             new_pass: "",
             new_pass_repeat: "",
-            error_message:"",
+            //error_message:"",
             editMode: false,
             own_user: true,
             button: "save"
@@ -353,7 +353,7 @@ export default class EmployeesForm extends Component {
 
     getJobTypes(){
         //axios get
-        var getCustomersEndpoint = this.state.apiUrl + "employee_types"
+        var getCustomersEndpoint = this.state.apiUrl + "employee-types"
         const axiosInstance = axios.create({
             headers: {
                 "Content-Type": "application/json"
@@ -374,7 +374,6 @@ export default class EmployeesForm extends Component {
                         errorText: 'Error ocurred:' + error
                     }
                 )
-                this.props.hadleUnsuccessfulAuth();
             });  
     }
     componentDidMount(){
@@ -489,15 +488,18 @@ export default class EmployeesForm extends Component {
                 value={this.state.sid}
                 onChange={this.handleChange}
                 />
-                <select
-                /*{ TODO: /*...this.state.own_user === false ? "disabled" : null }*/
-                name="job"  //identico al state
-                value={this.state.job}
-                onChange={this.handleChange}
-                className="select-element"
-                >
-                    {jobTypes}
-                </select>                        
+                {this.state.own_user === false && this.state.editMode === true ?
+                    <select
+                    name="job"  //identico al state
+                    value={this.state.job}
+                    onChange={this.handleChange}
+                    className="select-element"
+                    >
+                        {jobTypes}
+                    </select>                   
+                : null
+                }
+                     
             </div>   
             <div className="two-column">
                 <input

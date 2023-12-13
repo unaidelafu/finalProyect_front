@@ -10,25 +10,26 @@ const ProductsContainer = (props) =>{
                     return( 
                         <div key={"prod" + productItem.mp_id} className={"product-item-wrapper"}> 
                             <Link to={`/inv/${productItem.mp_id}`}>
-                                    <div className={"product-img-background"}>
-                                        <img src={productItem.img_url}/>
+                                    <div className={"product-img-background"}
+                                    style={{
+                                        backgroundImage: "url(" + productItem.img_url + ")"
+                                    }}>
                                     </div>
                                     
                                     <div className="img-text-wrapper">
                                         <div className="logo-wrapper">
-                                            {productItem.name}
+                                            {productItem.code} - {productItem.name}
                                         </div>
                                         <div className="subtitle">
-                                            <div>{productItem.code}</div>
-                                            <div>{productItem.description}</div>
+                                            <div>{productItem.b_name}</div>
                                         </div>
                                     </div>                                                  
                                 </Link>  
                                 <div className="actions">
-                                    <a className = "action-icon" onClick={()=> props.handleEditClick(productItem)}>
+                                    <a className = "action-icon-edit" onClick={()=> props.handleEditClick(productItem)}>
                                         <FontAwesomeIcon icon="edit" />
                                     </a>
-                                    <a className = "action-icon" onClick={()=> props.handleDeleteClick(productItem)}>
+                                    <a className = "action-icon-delete" onClick={()=> props.handleDeleteClick(productItem)}>
                                         <FontAwesomeIcon icon="trash" />
                                     </a>                            
                                 </div>                      

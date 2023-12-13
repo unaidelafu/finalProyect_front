@@ -1,0 +1,36 @@
+.product-detail-form-wrapper{
+    @include base-grid();
+    grid-template-columns: 1fr;
+    padding: 24px;
+
+    @include input-element();
+    input{
+        margin-bottom: 0px;
+    }
+    .error-message-wrapper{
+        @include error-message();
+        padding-top: 15px;
+        //TODO centrar!
+    }
+    .btn{
+        @include base-btn();
+    }
+    .btn-del{
+        @include base-btn();
+        background-color: $warning-light;
+        &:hover{
+            background-color: $warning;
+        }
+    }
+    
+    .select-element{
+        @include selector();
+    }
+
+}
+@media (max-width: 600px) {
+    .product-detail-form-wrapper  {
+        grid-template-columns: 1fr;
+
+    }
+}

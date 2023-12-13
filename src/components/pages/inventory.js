@@ -124,7 +124,7 @@ export default class Inventory extends Component {
 
     iterateTypesGroups(){
         var products = this.state.productList;        
-        console.log("Products:", products);
+        //console.log("Products:", products);
         
             const ProductTypes = products.map(productsForType =>{
                 if (products.length > 0) {
@@ -205,7 +205,7 @@ export default class Inventory extends Component {
             let filteredProducts = [];
             var i = 0;
             this.state.allProducts.forEach((allProductsByType) =>{
-                console.log("product by type",allProductsByType);
+                //console.log("product by type",allProductsByType);
 
                 let filteredProductList_code = allProductsByType.filter((product) => {
                     return product.code.toLowerCase().match(filterValue.toLowerCase());
@@ -252,12 +252,15 @@ export default class Inventory extends Component {
                     <div className="actions">
                         <a className = "action-icon" onClick={this.handleNewProductClick}>
                             <FontAwesomeIcon icon="fa-solid fa-circle-plus" /></a>
+                            
                     </div>
                     <div className="find-wrapper">
+                    
+                    <i class="fa-solid fa-magnifying-glass"></i>
                         <input
                         type="text"
                         name="filter"
-                        placeholder="Find Master Product"
+                        placeholder="Find Code, Name or Brand"
                         value={this.state.filter}
                         onChange={this.handleChange}></input>
                     </div>

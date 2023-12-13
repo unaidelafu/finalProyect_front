@@ -335,7 +335,7 @@ export default class ProductsForm extends Component {
 
     getProductTypes(){
         //axios get
-        var getProductsEndpoint = this.state.apiUrl + "brand-types"
+        var getProductsEndpoint = this.state.apiUrl + "brand-types";
         const axiosInstance = axios.create({
             headers: {
                 "Content-Type": "application/json"
@@ -350,18 +350,19 @@ export default class ProductsForm extends Component {
                 })
                 console.log("Product types:", this.state.product_types);
             }).catch(error => {
-                console.log("Some error occurred", error)
+                console.log("Some error occurred", error);
                 this.setState(
                     {
                         errorText: 'Error ocurred:' + error
                     }
                 )
+                //TODO CHECK WHY?
                 this.props.hadleUnsuccessfulAuth();
             });  
     }
     getBrands(){
          //axios get
-         var getProductsEndpoint = this.state.apiUrl + "brands"
+         var getProductsEndpoint = this.state.apiUrl + "brands";
          const axiosInstance = axios.create({
              headers: {
                  "Content-Type": "application/json"
@@ -382,6 +383,7 @@ export default class ProductsForm extends Component {
                          errorText: 'Error ocurred:' + error
                      }
                  )
+                 //TODO CHECK WHY?
                  this.props.hadleUnsuccessfulAuth();
              });        
     }

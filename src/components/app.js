@@ -9,7 +9,7 @@ import{
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 //Todos los iconos que vayas a utilizar en toda la aplicacion
-import { faTrash, faSignOutAlt, faEdit, faSpinner, faCirclePlus} from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faSignOutAlt, faEdit, faSpinner, faCirclePlus,faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 
 import NavigationContainer from './navigation/navigation-container';
 import Auth from "./pages/auth";
@@ -24,7 +24,7 @@ import NoMatch from "./pages/no-match";
 
 import EmployeeModal from "./modals/employee-modal.js";
 
-library.add(faTrash, faSignOutAlt, faEdit, faSpinner, faCirclePlus); //Añadir TODOS los iconos que se usa de fontAwesome
+library.add(faTrash, faSignOutAlt, faEdit, faSpinner, faCirclePlus, faMagnifyingGlass); //Añadir TODOS los iconos que se usa de fontAwesome
 
 export default class App extends Component {
   constructor(props){

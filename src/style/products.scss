@@ -1,13 +1,22 @@
 .products-grid-wrapper{
     
-    .product-job{
+    .product-type{
         text-transform:uppercase;
         color: $grey;
         //border-bottom: solid $corp-color;
         border-bottom: solid $grey;
         border-width: 1px;
         padding-left: 10px;
+    }       
+}
+.new-product-link{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    .find-wrapper{
+        @include input-element();
+        width: 97%;
+        font-size: 1.3em;
+        margin-bottom: 0px;
+        padding: 10px 0px 0px 0px;
     }
-    
-    
 }

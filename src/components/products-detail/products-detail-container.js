@@ -7,14 +7,13 @@ const ProductsDetailContainer = (props) =>{
             if (props.data.length > 0){
                     return(     
                         //header of the jobs 
-                        <div key={"proddtl" + productsItem.id} className={"product-detail-list-wrapper"}>                                                          
+                        <div key={"proddtl" + productsItem.id + "." + productsItem.w_id} className={"product-detail-list-wrapper"}>                                                          
                             <div className={"product-detail-item"}>
                                 <div className="text-content">
                                     <div className="title">{productsItem.w_name}</div>                        
-                                    <div className="title">{productsItem.name}</div>
                                     <div className="title">{productsItem.description}</div>
                                     <div className="title">{productsItem.size}</div>
-                                    <div className="title">{productsItem.qty}</div>                                  
+                                    <div className="title">{productsItem.qty} Units</div>                                  
                                     <div className="actions">
                                         <a className = "action-icon" onClick={()=> props.handleEditClick(productsItem)}>
                                             <FontAwesomeIcon icon="edit" />

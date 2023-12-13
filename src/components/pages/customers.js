@@ -192,7 +192,7 @@ export default class Customers extends Component {
                         <input
                         type="text"
                         name="filter"
-                        placeholder="Find Customer"
+                        placeholder="Find Customer or City"
                         value={this.state.filter}
                         onChange={this.handleChange}></input>
                     </div>

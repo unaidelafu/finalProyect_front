@@ -8,6 +8,17 @@
         border-width: 1px;
         padding-left: 10px;
     }
-    
-    
+   
+}
+
+.new-employee-link{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    .find-wrapper{
+        @include input-element();
+        width: 97%;
+        font-size: 1.3em;
+        margin-bottom: 0px;
+        padding: 10px 0px 0px 0px;
+    }
 }
