@@ -43,18 +43,7 @@ const NavigationContainer =  (props) =>{
         })
         */
     }
-    /*
-    const clearEmployeeToEdit = ()=>{
-        this.setState({
-            employeeToEdit: {}
-        })
-    }
-    const handleModalClose = ()=>{
-        this.setState({
-            employeeModalIsOpen: false
-        })      
-    }
-    */
+
     return(
         <div className="nav-wrapper">
             <div className="left-side">
@@ -63,19 +52,16 @@ const NavigationContainer =  (props) =>{
             {/*Al pulsar cada ruta, utiliza la class = active
             puede editarse y nombrar esa clase de activo: "unai-active"
             Interesante para cambiar los estilos del titulo.*/}
-                <div className="nav-link-wrapper">
-                    {props.loggedInStatus === "LOGGED_IN" ? dynamicLink("/home", "Home") : null}
-                </div>
-                <div className="nav-link-wrapper">
+
                     {props.loggedInStatus === "LOGGED_IN" ? dynamicLink("/inventory", "Inventory") : null}
-                </div>
-                <div className="nav-link-wrapper">
+
+
                     {props.loggedInStatus === "LOGGED_IN" ? dynamicLink("/customers", "Customers") : null}  
-                </div>
-                <div className="nav-link-wrapper">
+
+
                     {props.loggedInStatus === "LOGGED_IN" && props.adminUser === "1"? 
                     dynamicLink("/employees", "Employees") : null}
-                </div>            
+        
             {/*false ? <button>Add Blog</button>: null conditional if*/}
             </div>
             <div className="right-side">

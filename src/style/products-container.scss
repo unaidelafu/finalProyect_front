@@ -11,40 +11,13 @@
         .product-item-wrapper{
             @include product-item($dark-teal);
             //border: 1px solid blue;
-            /*
+            
             &:hover{
-                .title{
-                    color: $offwhite;
-                    transition: 0.75s ease-in-out;
-                }
-                .actions{
-                    .action-icon{
-                        color: $offwhite;
-                        transition: 0.75s ease-in-out;
-                    }   
-                }            
-                background-color: $dark-teal;
-                transition: 0.75s ease-in-out;
-            }
-            */
-        }
-        .product-item-2{
-            @include product-item(rgba(202, 60, 60, 0.685));
-            &:hover{
-                .title{
-                    color: $offwhite;
-                    transition: 0.75s ease-in-out;
-                }
-                .actions{
-                    .action-icon{
-                        color: $offwhite;
-                        transition: 0.75s ease-in-out;
-                    }   
-                }
-                background-color: rgba(202, 60, 60, 0.685);
-                transition: 0.75s ease-in-out;
-            }           
-            //border: 1px solid brown;
+                //transform: scale(1.05, 1.05);
+                box-shadow: 0 5px 15px $corp-color;
+                //background-color: $dark-teal;
+                transition: 0.3s ease-in-out;
+            }          
         }
         
     }
@@ -65,3 +38,4 @@
         }
     }
 }
+

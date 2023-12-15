@@ -10,7 +10,7 @@ export default class Auth extends Component{
     }
     hadleSuccessfulAuth(user){
         this.props.handleSuccessfulLogin(user);
-        this.props.history.push("/");   //Redirection to the home page
+        this.props.history.push("/inventory");   //Redirection to the home page
     }
     hadleUnsuccessfulAuth(){
         this.props.handleUnsuccessfulLogin();

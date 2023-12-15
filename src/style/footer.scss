@@ -1,7 +1,19 @@
-.footer-wrapper{
-    text-align: center;
-    color: black;
-    padding: 5px;
-    background-color: $corp-color;
-
+.app{
+    .footer-wrapper{
+        text-align: center;
+        color: black;
+        padding: 5px;
+        background-color: $corp-color;  
+        position: fixed;
+        bottom: 0;   
+        width: 100%;
+    }
+    @media (max-width: 600px) {
+        .footer-wrapper{
+            position: inherit;
+            width: 100%;
+        }
+    }
 }
+
+

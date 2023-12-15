@@ -1,36 +1,9 @@
 .customer-manager-wrapper{
     padding:30px;
     .customer-list-wrapper{
-        //width: 90%;
         display: grid;
-        //grid-template-columns: 1fr 1fr 1fr;
         align-items: start;
-        //gap: 10px;
         padding: 5px;
-        /*
-        .empty-field{
-            //width: 200px;    display: flex;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-            grid-column: 1 / max;            
-        }
-        */
-        /*
-        @media (max-width: 1200px) {
-            .empty-field {
-                //grid-template-columns: 1fr 1fr;
-                grid-column: 2 / 1;  
-            }
-        }
-        @media (max-width: 600px) {
-            .empty-field {
-                //grid-template-columns: 1fr;
-                grid-column: 1 / 1;  
-            }
-        }
-        */
         .customer-item{
             display: grid;
             //@include customer-item($dark-teal);

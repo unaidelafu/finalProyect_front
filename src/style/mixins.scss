@@ -103,15 +103,10 @@ grid-gap: 21px;
 }
 @mixin product-item($color){
 
-    //position: relative;
-    //display:flex;
-    //flex-direction: column;
     display: grid;
     grid-template-columns: 1fr;
     justify-content: center;
-    //justify-content: space-between;
     align-items: center;
-    //height: 100%;
     text-align: center;
     padding-left: 100px;
     padding-right: 100px;
@@ -119,10 +114,8 @@ grid-gap: 21px;
     border-radius: 15px;
     border-radius: 8px;
     padding: 2%;
-    //padding: 20px; 
     cursor: pointer;    
-    
-    //min-width: 150px;
+
     a{
         text-decoration: none;
         font-family: "Titillium Web", sans-serif;
@@ -156,12 +149,6 @@ grid-gap: 21px;
         }
     }
 
-/*
-    .product-img-background img{
-        width: 100px;
-        height: 120px;
-        object-fit: cover;
-    }   */
     
     .product-img-background{
         background-size: contain;
@@ -173,91 +160,12 @@ grid-gap: 21px;
     }
     
     .img-text-wrapper{
-        /*
-        position: absolute;
-        top: 0;
-        display:flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-        text-align: center;
-        padding-left: 100px;
-        padding-right: 100px;
-        */
         .subtitle {
             transition: 1s ease-in-out;
             //color: transparent;
         }
        
     }
-    
-    .img-text-wrapper:hover .subtitle{
-        color: $teal;
-        font-weight: 400;
-    }
-    /*
-    .img-text-wrapper:hover .product-img-background{
-        transition: 1s;
-        filter: brightness(10%)
-    }*/
-    .img-text-wrapper:hover + .product-img-background {
-        transition: 1s;
-        filter: brightness(10%)
-    }
-    .image-blur{
-        transition: 1s;
-        filter: brightness(10%)
-    }
-
-
-
-
-
-
-
-
-
-
-    /*
-    //------
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-    border: 1px solid $color;
-    border-radius: 8px;
-    padding: 20px;   
-    cursor: pointer;    
-    //display: flex;
-    //flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    //min-width: 150px;
-    .product-img img{
-        width: 100px;
-        height: 120px;
-        object-fit: cover;
-    }    
-    .product-img-background{
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        height: 350px;
-        width: 100%;
-    }          
-    .text-content{
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-        //min-width: 150px;
-
-        .title{
-            color: $charcoal;
-            font-size: 1.5em;
-            text-align: center;
-        }
-    }
-    */
 }
 
 
@@ -291,7 +199,7 @@ grid-gap: 21px;
       }   
       .actions{
           display: grid;
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: 1fr;
           grid-gap:15px;
           text-align: right;
           
@@ -301,12 +209,17 @@ grid-gap: 21px;
               font-size: 1.5em;
               transition: 0.5s ease-in-out;
               &:hover{
-                  color: $warning;
+                  color: $corp-color;
               }
           }
       }
   }
+  @media (max-width: 1000px) {
+    .text-content{
+        grid-template-columns: 1fr
+    }
 
+}
 }
 
 @mixin product-detail-item($color){
@@ -348,9 +261,14 @@ grid-gap: 21px;
                 font-size: 1.5em;
                 transition: 0.5s ease-in-out;
                 &:hover{
-                    color: $warning;
+                    color: $corp-color;
                 }
             }
         }
     }   
+    @media (max-width: 1000px) {
+        .text-content{
+            grid-template-columns: 1fr
+        }    
+    }
 }

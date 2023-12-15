@@ -238,36 +238,36 @@ export default class Inventory extends Component {
         this.get_products();
       }
     render(){
-        return(
-            <div className="product-manager-wrapper"> 
-                {<ProductModal
-                    handleSuccessfullNewSubmission = {this.handleSuccessfullNewSubmission}
-                    handleModalClose={this.handleModalClose}            
-                    modalIsOpen = {this.state.productModalIsOpen} 
-                    productToEdit = {this.state.productToEdit}
-                    clearProductToEdit = {this.clearProductToEdit}/>}
-                
-                <div className="new-product-link">
-                    <div className="gap"></div>
-                    <div className="actions">
-                        <a className = "action-icon" onClick={this.handleNewProductClick}>
-                            <FontAwesomeIcon icon="fa-solid fa-circle-plus" /></a>
-                            
-                    </div>
-                    <div className="find-wrapper">
+            return(
+                <div className="product-manager-wrapper"> 
+                    {<ProductModal
+                        handleSuccessfullNewSubmission = {this.handleSuccessfullNewSubmission}
+                        handleModalClose={this.handleModalClose}            
+                        modalIsOpen = {this.state.productModalIsOpen} 
+                        productToEdit = {this.state.productToEdit}
+                        clearProductToEdit = {this.clearProductToEdit}/>}
                     
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                        <input
-                        type="text"
-                        name="filter"
-                        placeholder="Find Code, Name or Brand"
-                        value={this.state.filter}
-                        onChange={this.handleChange}></input>
+                    <div className="new-product-link">
+                        <div className="gap"></div>
+                        <div className="actions">
+                            <a className = "action-icon" onClick={this.handleNewProductClick}>
+                                <FontAwesomeIcon icon="fa-solid fa-circle-plus" /></a>
+                                
+                        </div>
+                        <div className="find-wrapper">
+                        
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                            <input
+                            type="text"
+                            name="filter"
+                            placeholder="Find Code, Name or Brand"
+                            value={this.state.filter}
+                            onChange={this.handleChange}></input>
+                        </div>
                     </div>
+                    {this.iterateTypesGroups()}
+                    
                 </div>
-                {this.iterateTypesGroups()}
-                
-            </div>
-        );
+            );
     }    
 }

@@ -1,21 +1,11 @@
 .employee-form-wrapper{
+
     @include base-grid();
     grid-template-columns: 0.75fr 2fr;
     padding: 24px;
 
-    @include input-element();
-    input{
-        margin-bottom: 0px;
-    }
-    .error-message-wrapper{
-        @include error-message();
-        padding-top: 15px;
-        //TODO centrar!
-    }
     .image-uploaders{
         @include base-grid();
-        //grid-template-columns: 200px 200px 200px;
-
         .employee-manager-image-wrapper{
             text-align: center;
             img{
@@ -38,6 +28,21 @@
         }
         
     }
+
+    @include input-element();
+    input{
+        margin-bottom: 0px;
+    }
+
+    .select-element{
+        @include selector();
+    }    
+
+    .error-message-wrapper{
+        @include error-message();
+        padding-top: 15px;
+    }
+
     .btn{
         @include base-btn();
     }
@@ -49,14 +54,11 @@
         }
     }
     
-    .select-element{
-        @include selector();
-    }
+
 
 }
 @media (max-width: 600px) {
     .employee-form-wrapper  {
         grid-template-columns: 1fr;
-
     }
 }

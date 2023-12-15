@@ -114,21 +114,25 @@ clearEmployeeToEdit(){
     //this.checkLoginStatus();
   }
   
-/*
+
   authorizedPages(){
+    console.log("NO Admin");    
     return [
-            <Route key="home" path="/home" component = {Home} />,
-            <Route key="customers" path="/customers" component = {Customers} /> ,             
-            <Route key="employees" path="/employees" component = {Employees} />,
-            <Route key="inventory" path="/inventory" component = {Inventory} />
+            <Route key="customers" path="/customers" component = {Customers} /> ,            
+            <Route key="inventory" path="/inventory" component = {Inventory} />,
+            <Route path="/inv/:slug" component = {InventoryDetail} />
     ];
   }
   authprozedAdminPages(){
-    return [<Route key="employees" path="/employees" component = {Employees} />];
+    console.log("Admin");
+    return [         
+      <Route key="employees" path="/employees" component = {Employees} />
+    ];
   }
   
-  */
+  
   render() {
+    console.log("admin user",this.state.adminUser);
     return (
       <div className='container'>         
         <Router>
@@ -158,12 +162,9 @@ clearEmployeeToEdit(){
                   />
                 )}
               />
-              <Route exact path="/customers" component = {Customers} />
-              <Route exact path="/employees" component = {Employees} />
-              <Route exact path="/inventory" component = {Inventory} />
-              <Route path="/inv/:slug" component = {InventoryDetail} />
-              <Route exact path="/home" component = {Home} />
-              {/*this.state.loggedInStatus === "LOGGED_IN" ? this.authorizedPages(): null*/}
+              {this.state.adminUser == "1" ? this.authprozedAdminPages(): null}
+              {this.state.loggedInStatus === "LOGGED_IN" ? this.authorizedPages(): null}
+              
               <Route component = {NoMatch} /*Siempre al final, porque las pages funcionan como if else*//>        
             </Switch>
 

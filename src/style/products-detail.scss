@@ -41,4 +41,9 @@
             }
         }
     }
+    @media (max-width: 1000px) {
+        .new-product-link{
+            grid-template-columns: 1fr
+        }    
+    }
 }
