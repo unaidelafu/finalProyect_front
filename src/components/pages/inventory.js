@@ -256,7 +256,7 @@ export default class Inventory extends Component {
                         </div>
                         <div className="find-wrapper">
                         
-                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <i className="fa-solid fa-magnifying-glass"></i>
                             <input
                             type="text"
                             name="filter"

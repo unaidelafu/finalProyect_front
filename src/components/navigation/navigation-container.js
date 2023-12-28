@@ -17,31 +17,12 @@ const NavigationContainer =  (props) =>{
     };
 
     const handleSignOut = () =>{
-        //Delete de session:
-        /*
-        axios.delete("https://api.devcamp.space/logout",
-        {withCredentials: true}).then(response => {
-            if(response.status === 200){    //Success
-                props.history.push("/");
-                props.handleSuccessfulLogout();
-            }
-            return response.data;
-        })
-        .catch(error =>{
-            console.log("Error signin out", error)
-        });   */
         props.history.push("/auth");
         props.handleSuccessfulLogout();
     };
     const handleEditClick = () =>{
         console.log("Clicked")
         props.handleOwnUserEdit();
-        /*
-        this.setState({
-            employeeToEdit: props.loggedUser,
-            employeeModalIsOpen: true
-        })
-        */
     }
 
     return(
@@ -52,7 +33,7 @@ const NavigationContainer =  (props) =>{
             {/*Al pulsar cada ruta, utiliza la class = active
             puede editarse y nombrar esa clase de activo: "unai-active"
             Interesante para cambiar los estilos del titulo.*/}
-
+                    {props.loggedInStatus === "LOGGED_IN" ? dynamicLink("/work", "Work") : null}
                     {props.loggedInStatus === "LOGGED_IN" ? dynamicLink("/inventory", "Inventory") : null}
 
 

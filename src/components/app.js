@@ -14,6 +14,7 @@ import { faTrash, faSignOutAlt, faEdit, faSpinner, faCirclePlus,faMagnifyingGlas
 import NavigationContainer from './navigation/navigation-container';
 import Auth from "./pages/auth";
 import Home from "./pages/home";
+import Work from "./pages/work";
 import Customers from "./pages/customers";
 import Employees from "./pages/employees";
 import Inventory from "./pages/inventory";
@@ -118,9 +119,10 @@ clearEmployeeToEdit(){
   authorizedPages(){
     console.log("NO Admin");    
     return [
+            <Route key="work" path="/work" component = {Work} /> , 
             <Route key="customers" path="/customers" component = {Customers} /> ,            
             <Route key="inventory" path="/inventory" component = {Inventory} />,
-            <Route path="/inv/:slug" component = {InventoryDetail} />
+            <Route key="inv:slug" path="/inv/:slug" component = {InventoryDetail} />
     ];
   }
   authprozedAdminPages(){
