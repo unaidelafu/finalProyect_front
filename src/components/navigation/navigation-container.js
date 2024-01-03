@@ -35,11 +35,8 @@ const NavigationContainer =  (props) =>{
             Interesante para cambiar los estilos del titulo.*/}
                     {props.loggedInStatus === "LOGGED_IN" ? dynamicLink("/work", "Work") : null}
                     {props.loggedInStatus === "LOGGED_IN" ? dynamicLink("/inventory", "Inventory") : null}
-
-
-                    {props.loggedInStatus === "LOGGED_IN" ? dynamicLink("/customers", "Customers") : null}  
-
-
+                    {props.loggedInStatus === "LOGGED_IN" ? dynamicLink("/customers", "Customers") : null}
+                    {props.loggedInStatus === "LOGGED_IN" ? dynamicLink("/bikes", "Bikes") : null}  
                     {props.loggedInStatus === "LOGGED_IN" && props.adminUser === "1"? 
                     dynamicLink("/employees", "Employees") : null}
         
