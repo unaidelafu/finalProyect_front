@@ -1,0 +1,30 @@
+.work-window-manager-wrapper{
+    padding:30px;
+    .work-window-list-wrapper{
+        display: grid;
+        align-items: start;
+        padding: 5px;
+        .work-window-item{
+            display: grid;
+            //@include work-window-item($dark-teal);
+            //@include work-window-item($corp-color);
+            //grid-template-columns: 1fr 1fr 1fr 1fr 0.5fr;
+            
+            //border: 1px solid blue;
+            &:hover{
+                .title{
+                    color: $offwhite;
+                    transition: 0.75s ease-in-out;
+                }
+                .actions{
+                    .action-icon{
+                        color: $offwhite;
+                        transition: 0.75s ease-in-out;
+                    }   
+                }            
+                background-color: $dark-corp-color;
+                transition: 0.75s ease-in-out;
+            }
+        }       
+    }
+}

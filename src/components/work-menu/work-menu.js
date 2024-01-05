@@ -10,31 +10,19 @@ export default class WorkMenu extends Component{
         //instancia
         //console.log("WorkMenu has rendered");
         this.state = {
-            pageTitle:"Welcome to my portfolio",
             isLoading : false,
-            data: []
+            dataToShow: "Orders"
         };
         this.handleFilter = this.handleFilter.bind(this);
         
     }
 
 
-/*
-    portfolioItems() {
-        //a loop for the number of the items:
-        return this.state.data.map(item => {
-            //console.log("Item data", item);
-            //debugger;
-            return <PortfolioItem key = {item.id} item = {item}/>;
-        })
-    }
-    */
     handleFilter(filter){
         this.setState({
-            data: this.state.data.filter(item =>{
-                return item.category === filter;
-            })
+            dataToShow: filter          
         })
+        console.log("El filtro: ", filter);
     }
     
     //lifecycle hook. Cuando se han cargado los componentes

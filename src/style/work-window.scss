@@ -1,0 +1,36 @@
+.work-window-manager-wrapper{
+    padding:30px;
+    .new-work-window-link{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        .find-wrapper{
+            @include input-element();
+            width: 97%;
+            font-size: 1.3em;
+            margin-bottom: 0px;
+            padding: 10px 0px 0px 0px;
+        }
+    }
+    @media (max-width: 600px) {
+        .new-work-window-link{
+            display: grid;
+            grid-template-columns: 1fr
+        }
+    }
+    .actions{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-gap:15px;
+        
+        .action-icon{
+            justify-self: center;
+            cursor: pointer;
+            color:$corp-color;
+            font-size: 3.5em;
+            transition: 0.5s ease-in-out;
+            &:hover{
+                color: $dark-corp-color;
+            }
+        }
+    }    
+}
