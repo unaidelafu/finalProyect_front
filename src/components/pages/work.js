@@ -6,7 +6,6 @@ import WorkWindow from "./work-window";
 export default function(){
     return (
         <div>
-            <div><WorkMenu/></div>
             <div><WorkWindow/></div>
             <div>Windows of rows</div>
         </div>

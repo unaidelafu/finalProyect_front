@@ -7,6 +7,8 @@ import CustomersContainer from "../customers/customers-container.js"
 import CustomerModal from "../modals/customer-modal.js";
 import IncomingHeadersContainer from "../incoming-headers/incoming-headers-container.js";
 import IncomingLinesContainer from "../incomin-lines/incoming-lines-container.js";
+import WorkMenu from "../work-menu/work-menu";
+
 export default class WorkWindow extends Component {
     constructor(){
         super();
@@ -39,9 +41,20 @@ export default class WorkWindow extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.get_data = this.get_data.bind(this);
         this.containerSelected = this.containerSelected.bind(this);
-        
+        this.handleTableSelected = this.handleTableSelected.bind(this);
     };
 
+    handleTableSelected(dataToFind,statusToFind){
+        console.log("data to find:", dataToFind, statusToFind);
+        this.setState({
+            dataToFind: dataToFind,
+            statusToFind: statusToFind
+        });
+        //todo: 
+        //Clear data.
+        //
+        this.get_data(dataToFind, statusToFind);
+    }
     clearCustomerToEdit(){
         this.setState({
             customerToEdit: {}
@@ -135,9 +148,10 @@ export default class WorkWindow extends Component {
         });
         
     }
-    get_data(){
-        var dataToFind = this.state.dataToFind;
-        var statusToFind = this.state.statusToFind;
+    get_data(dataToFind, statusToFind){
+        //var dataToFind = this.state.dataToFind;
+        //var statusToFind = this.state.statusToFind;
+        console.log("El status", statusToFind);
         var apiUrl_end = "";
         if (dataToFind == "Headers"){
             if (statusToFind == ""){
@@ -192,6 +206,7 @@ export default class WorkWindow extends Component {
 
     componentDidMount(){
         this.get_data();
+        console.log("Did mount!!");
       }
     containerSelected(){
         var dataToFind = this.state.dataToFind;
@@ -232,31 +247,36 @@ export default class WorkWindow extends Component {
     }*/
     render(){
         return(
-            <div className="work-window-manager-wrapper"> 
-                 <CustomerModal
-                    handleSuccessfullNewSubmission = {this.handleSuccessfullNewSubmission}
-                    handleSuccessfullEditSubmission = {this.handleSuccessfullEditSubmission}
-                    handleSuccessfullDelete = {this.handleSuccessfullDelete}
-                    handleModalClose={this.handleModalClose}            
-                    modalIsOpen = {this.state.customerModalIsOpen} 
-                    customerToEdit = {this.state.customerToEdit}
-                    clearCustomerToEdit = {this.clearCustomerToEdit}/>                      
-                <div className="new-work-window-link">
-                    <div className="gap"></div>
-                    <div className="actions">
-                        <a className = "action-icon" onClick={this.handleNewCustomerClick}>
-                            <FontAwesomeIcon icon="fa-solid fa-circle-plus" /></a>
-                    </div>
-                    <div className="find-wrapper">
-                        <input
-                        type="text"
-                        name="filter"
-                        placeholder="Find Customer or City"
-                        value={this.state.filter}
-                        onChange={this.handleChange}></input>
-                    </div>
-                </div>  
-                {this.containerSelected()}           
+            <div>
+                  <WorkMenu
+                    handleTableSelected = {this.handleTableSelected}
+                  />                          
+                <div className="work-window-manager-wrapper"> 
+                    <CustomerModal
+                        handleSuccessfullNewSubmission = {this.handleSuccessfullNewSubmission}
+                        handleSuccessfullEditSubmission = {this.handleSuccessfullEditSubmission}
+                        handleSuccessfullDelete = {this.handleSuccessfullDelete}
+                        handleModalClose={this.handleModalClose}            
+                        modalIsOpen = {this.state.customerModalIsOpen} 
+                        customerToEdit = {this.state.customerToEdit}
+                        clearCustomerToEdit = {this.clearCustomerToEdit}/>                      
+                    <div className="new-work-window-link">
+                        <div className="gap"></div>
+                        <div className="actions">
+                            <a className = "action-icon" onClick={this.handleNewCustomerClick}>
+                                <FontAwesomeIcon icon="fa-solid fa-circle-plus" /></a>
+                        </div>
+                        <div className="find-wrapper">
+                            <input
+                            type="text"
+                            name="filter"
+                            placeholder="Find Customer or City"
+                            value={this.state.filter}
+                            onChange={this.handleChange}></input>
+                        </div>
+                    </div>  
+                    {this.containerSelected()}           
+                </div>
             </div>
         );
     }    
